@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/test")
 public class TestResource {
 
+    private Integer incrementTest = 0;
+
     @RequestMapping("/auth")
     public String auth() {
         // If you don't specify credentials when constructing the client, the
@@ -23,8 +25,15 @@ public class TestResource {
 
         Page<Bucket> buckets = storage.list();
         for (Bucket bucket : buckets.iterateAll()) {
+            // Initialize buckets?
         }
         return buckets.toString();
+    }
+
+    @RequestMapping("/increment")
+    public Integer increment() {
+        incrementTest ++;
+        return incrementTest;
     }
 
 }
