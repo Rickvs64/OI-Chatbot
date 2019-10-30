@@ -2,6 +2,7 @@ package com.example.oichatbot.resources;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.google.api.client.util.Lists;
 import com.google.api.client.util.Maps;
 import com.google.api.gax.paging.Page;
 import com.google.auth.Credentials;
@@ -70,6 +71,18 @@ public class TestResource {
         return resultMap.toString();
     }
 
+    /**
+     * Display a list of possible intents recognized by the DialogFlow API.
+     * @return List of recognized intents and possible responses.
+     * @throws Exception
+     */
+    @RequestMapping("/list")
+    public String listIntents() throws Exception {
+        return listIntents("openinno").toString();
+    }
+
+
+
 
     /**
      * Simple test method for connecting to the DialogFlow API with a given project ID, intent message, sesson ID and language code.
@@ -112,6 +125,43 @@ public class TestResource {
             }
         }
         return queryResults;
+    }
+
+    /**
+     * Retrieve a list of all possible recognized intents (commands) via the DialogFlow API.
+     * @param projectId Project ID, default is "openinno".
+     * @return List of possible intents the API can respond to.
+     * @throws Exception
+     */
+    private static List<Intent> listIntents(String projectId) throws Exception {
+        List<Intent> intents = Lists.newArrayList();
+        // Instantiates a client
+        try (IntentsClient intentsClient = IntentsClient.create()) {
+            // Set the project agent name using the projectID (my-project-id)
+            ProjectAgentName parent = ProjectAgentName.of(projectId);
+
+            // Performs the list intents request
+            for (Intent intent : intentsClient.listIntents(parent).iterateAll()) {
+                System.out.println("====================");
+                System.out.format("Intent name: '%s'\n", intent.getName());
+                System.out.format("Intent display name: '%s'\n", intent.getDisplayName());
+                System.out.format("Action: '%s'\n", intent.getAction());
+                System.out.format("Root followup intent: '%s'\n", intent.getRootFollowupIntentName());
+                System.out.format("Parent followup intent: '%s'\n", intent.getParentFollowupIntentName());
+
+                System.out.format("Input contexts:\n");
+                for (String inputContextName : intent.getInputContextNamesList()) {
+                    System.out.format("\tName: %s\n", inputContextName);
+                }
+                System.out.format("Output contexts:\n");
+                for (Context outputContext : intent.getOutputContextsList()) {
+                    System.out.format("\tName: %s\n", outputContext.getName());
+                }
+
+                intents.add(intent);
+            }
+        }
+        return intents;
     }
 
 }
