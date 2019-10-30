@@ -39,7 +39,8 @@ public class TestResource {
 
         Page<Bucket> buckets = storage.list();
         for (Bucket bucket : buckets.iterateAll()) {
-            // Initialize buckets?
+            // Display iterated buckets?
+            // No actions necessary for now.
         }
         return buckets.toString();
     }
