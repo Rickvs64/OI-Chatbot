@@ -2,6 +2,7 @@ package com.example.oichatbot.resources;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.google.api.client.json.GenericJson;
 import com.google.api.client.util.Lists;
 import com.google.api.client.util.Maps;
 import com.google.api.gax.paging.Page;
@@ -11,6 +12,7 @@ import com.google.cloud.dialogflow.v2.*;
 import com.google.cloud.storage.Bucket;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
+import com.google.gson.Gson;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -68,6 +70,8 @@ public class TestResource {
         texts.add(message);
 
         Map<String, QueryResult> resultMap = detectIntentTexts("openinno", texts, "123456", "en-US");
+        // QueryResult has issues serializing so for now we'll convert to string.
+        // The eventual chatbot application will simply extract the essential values we need from QueryResult and convert them into a custom response class.
         return resultMap.toString();
     }
 
@@ -80,7 +84,6 @@ public class TestResource {
     public String listIntents() throws Exception {
         return listIntents("openinno").toString();
     }
-
 
 
 
