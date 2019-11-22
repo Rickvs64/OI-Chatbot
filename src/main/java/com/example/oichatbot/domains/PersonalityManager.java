@@ -11,6 +11,9 @@ public class PersonalityManager {
     private Map<String, Double> emotions;
     private Map<String, Double> personality;
 
+    private boolean allowDynamicEmotions = false;
+    private boolean allowDynamicPersonality = false;
+
     private static PersonalityManager instance = null;
 
     private PersonalityManager() {

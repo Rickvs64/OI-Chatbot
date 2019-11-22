@@ -27,6 +27,17 @@ public class DialogFlowBridge {
         return instance;
     }
 
+    /**
+     * New chat method with support for personality and dynamic response building.
+     * Call this method as a starting point for any chat message.
+     * @return
+     */
+    public String chat(String input, String languageCode) {
+        // Todo: Use PersonalityManager to determine if and how much its emotions/personality are altered.
+
+        
+    }
+
 
     /**
      * Simplified variant of 'detectIntentTexts' that returns only one string response.
