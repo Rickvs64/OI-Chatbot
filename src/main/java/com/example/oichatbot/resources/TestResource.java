@@ -83,18 +83,6 @@ public class TestResource {
 
 
     /**
-     * Simplified variant of 'detectIntentTexts' that returns only one string response.
-     * @param projectId Project ID, default is "openinno".
-     * @param sessionId Session ID, use the same ID in successive requests for a continuous conversation.
-     * @param languageCode Language code, default is "en-US".
-     * @return The full response object, containing the message to be displayed and extra data regarding intent extraction and context.
-     * @throws Exception
-     */
-    private static String detectIntentSimple(String projectId, String input, String sessionId, String languageCode) throws Exception {
-        return DialogFlowBridge.getInstance().detectIntentSimple(projectId, input, sessionId, languageCode);
-    }
-
-    /**
      * Retrieve a list of all possible recognized intents (commands) via the DialogFlow API.
      * @param projectId Project ID, default is "openinno".
      * @return List of possible intents the API can respond to.

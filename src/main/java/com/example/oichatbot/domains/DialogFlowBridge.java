@@ -56,7 +56,7 @@ public class DialogFlowBridge {
      * @return The full response object, containing the message to be displayed and extra data regarding intent extraction and context.
      * @throws Exception
      */
-    public String detectIntentSimple(String projectId, String input, String sessionId, String languageCode) throws Exception {
+    private String detectIntentSimple(String projectId, String input, String sessionId, String languageCode) throws Exception {
         // Set default response text (in case of an error).
         String answer = "(Error getting intent response.)";
         // Instantiates a client
