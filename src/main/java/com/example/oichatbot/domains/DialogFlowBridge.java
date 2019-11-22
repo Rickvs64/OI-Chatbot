@@ -32,10 +32,19 @@ public class DialogFlowBridge {
      * Call this method as a starting point for any chat message.
      * @return
      */
-    public String chat(String input, String languageCode) {
+    public Message chat(String input, String languageCode) throws Exception {
         // Todo: Use PersonalityManager to determine if and how much its emotions/personality are altered.
 
-        
+        // Determine relevant project id.
+        String projectId = determineProjectId();
+        String sessionId = "123456";
+
+        String rawAnswer = detectIntentSimple(projectId, input, sessionId, languageCode);
+        Message parsedAnswer = new Message(parseAnswer(rawAnswer), true);
+
+        // Todo: Determine message object's advanced parameters like suggested color.
+
+        return parsedAnswer;
     }
 
 
@@ -113,5 +122,15 @@ public class DialogFlowBridge {
             }
         }
         return intents;
+    }
+
+    private String determineProjectId() {
+        // todo: Possibly choose between different project ID's depending on current emotions/personality.
+        return "openinno";
+    }
+
+    private String parseAnswer(String rawAnswer) {
+        // todo: Parse DialogFlow's response (with its optional cursewords etc.) to a readable format.
+        return rawAnswer;
     }
 }

@@ -68,9 +68,7 @@ public class TestResource {
      */
     @PostMapping(path = "/chat/post", consumes = "application/json", produces = "application/json")
     public Message chatSimple(@RequestBody Message message) throws Exception {
-        String answer = detectIntentSimple("openinno", message.getContent(), "123456", "en-US");
-        Message response = new Message(answer, true);
-        return response;
+        return DialogFlowBridge.getInstance().chat(message.getContent(), "en-US");
     }
 
     /**
