@@ -1,5 +1,7 @@
 package com.example.oichatbot.domains;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -8,8 +10,8 @@ import java.util.Map;
  */
 public class PersonalityManager {
 
-    private Map<String, Double> emotions;
-    private Map<String, Double> personality;
+    private Map<String, Float> emotions;    // Emotions that range from -1.0f to 1.0f.
+    private Map<String, Float> personality;     // Personality qualities that range from -1.0f to 1.0f.
 
     private boolean allowDynamicEmotions = false;
     private boolean allowDynamicPersonality = false;
@@ -33,17 +35,42 @@ public class PersonalityManager {
     private void initEmotions() {
         emotions.clear();
 
-        // Patience (1.0d) <---> Frustration (0.0d).
-        emotions.put("Patience", 0.5d);
+        // Patience (1.0f) <---> Frustration (-1.0f).
+        emotions.put("Patience", 0.0f);
     }
 
     private void initPersonality() {
         personality.clear();
 
         // Desire -> high values lead to expressing attraction and occasional dirty talk.
-        personality.put("Desire", 0.5d);
+        personality.put("Desire", 0.0f);
         // Curiosity -> high values lead to asking many questions and potentially coming across as "nosy".
-        personality.put("Curiosity", 0.5d);
+        personality.put("Curiosity", 0.0f);
+    }
+
+    public String getLeadingPersonality() {
+        return getHighestKeyInMap(personality);
+    }
+
+    private String getHighestKeyInMap(Map<String, Float> map) {
+        // Separate into two arrays.
+        List<String> strings = new ArrayList<String>();
+        List<Float> floats = new ArrayList<Float>();
+        for (Map.Entry<String, Float> entry : map.entrySet()) {
+            strings.add(entry.getKey());
+            floats.add(entry.getValue());
+        }
+
+        Float highestValue = 0.0f;
+        int highestIndex = 0;
+        for (int i = 0; i < strings.size(); i++){
+            if (floats.get(i) > Math.abs(highestValue)) {
+                highestValue = floats.get(i);
+                highestIndex = i;
+            }
+        }
+
+        return strings.get(highestIndex);
     }
 
 }

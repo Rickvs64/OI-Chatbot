@@ -35,9 +35,11 @@ public class DialogFlowBridge {
     public Message chat(String input, String languageCode) throws Exception {
         // Todo: Use PersonalityManager to determine if and how much its emotions/personality are altered.
 
-        // Determine relevant project id.
-        String projectId = determineProjectId();
-        String sessionId = "1234567";
+        String projectId = "openinno";
+        String sessionId = "123456";
+
+        // Determine context based on current personality profile.
+        String context = pm.getLeadingPersonality();
 
         String rawAnswer = detectIntentSimple(projectId, input, sessionId, languageCode);
         Message parsedAnswer = new Message(parseAnswer(rawAnswer), true);
