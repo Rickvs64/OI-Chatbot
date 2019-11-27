@@ -1,6 +1,7 @@
 package com.example.oichatbot.domains;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,14 +34,14 @@ public class PersonalityManager {
     }
 
     private void initEmotions() {
-        emotions.clear();
+        emotions = new HashMap<>();
 
         // Patience (1.0f) <---> Frustration (-1.0f).
         emotions.put("Patience", 0.0f);
     }
 
     private void initPersonality() {
-        personality.clear();
+        personality = new HashMap<>();
 
         // Desire -> high values lead to expressing attraction and occasional dirty talk.
         personality.put("Desire", 0.0f);
@@ -71,6 +72,12 @@ public class PersonalityManager {
         }
 
         return strings.get(highestIndex);
+    }
+
+    private void temp() {
+        // Just sets a default character trait for testing.
+        // Using map.put() is fine since duplicates aren't allowed.
+        personality.put("Desire", 1.0f);
     }
 
 }

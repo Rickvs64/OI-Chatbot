@@ -10,8 +10,6 @@ import java.util.List;
  * Singleton class.
  */
 public class DialogFlowBridge {
-    private PersonalityManager pm;
-
     private static DialogFlowBridge instance = null;
 
     private DialogFlowBridge() {
@@ -39,9 +37,11 @@ public class DialogFlowBridge {
         String sessionId = "123456";
 
         // Determine context based on current personality profile.
-        String context = pm.getLeadingPersonality();
+        String context = PersonalityManager.getInstance().getLeadingPersonality();
 
-        String rawAnswer = detectIntentSimple(projectId, input, sessionId, languageCode);
+        // Connect to DialogFlow and await response.
+        String rawAnswer = detectIntentSimple(projectId, input, sessionId, languageCode, context);
+        // Parse answer for special tags, tweaking time format, etc.
         Message parsedAnswer = new Message(parseAnswer(rawAnswer), true);
 
         // Todo: Determine message object's advanced parameters like suggested color.
@@ -55,10 +55,11 @@ public class DialogFlowBridge {
      * @param projectId Project ID, default is "openinno".
      * @param sessionId Session ID, use the same ID in successive requests for a continuous conversation.
      * @param languageCode Language code, default is "en-US".
+     * @param contextString Context to filter with, should match exact defined personality traits.
      * @return The full response object, containing the message to be displayed and extra data regarding intent extraction and context.
      * @throws Exception
      */
-    private String detectIntentSimple(String projectId, String input, String sessionId, String languageCode) throws Exception {
+    private String detectIntentSimple(String projectId, String input, String sessionId, String languageCode, String contextString) throws Exception {
         // Set default response text (in case of an error).
         String answer = "(Error getting intent response.)";
         // Instantiates a client.
@@ -66,13 +67,14 @@ public class DialogFlowBridge {
             // Set the session name using the sessionId (UUID) and projectID (my-project-id).
             SessionName session = SessionName.of(projectId, sessionId);
             System.out.println("Session Path: " + session.toString());
+            System.out.println("Using filter context: " + contextString);
 
             // Set the text (hello) and language code (en-US) for the query.
             TextInput.Builder textInput = TextInput.newBuilder().setText(input).setLanguageCode(languageCode);
 
-            // Build the query with the TextInput.
+            // Build the query with the TextInput and Context as parameter.
             QueryInput queryInput = QueryInput.newBuilder().setText(textInput).build();
-            Context context = Context.newBuilder().setName(session.toString() + "/contexts/" + "testcontext").setLifespanCount(999).build();      // <-- THIS ONE?
+            Context context = Context.newBuilder().setName(session.toString() + "/contexts/" + contextString).setLifespanCount(1).build();      // <-- THIS ONE?
             QueryParameters params = QueryParameters.newBuilder().addContexts(context).build();
 
             // Build a new DetectIntentRequest with determined input and parameters.
