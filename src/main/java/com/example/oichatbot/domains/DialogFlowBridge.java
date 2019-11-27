@@ -37,7 +37,7 @@ public class DialogFlowBridge {
 
         // Determine relevant project id.
         String projectId = determineProjectId();
-        String sessionId = "123456";
+        String sessionId = "1234567";
 
         String rawAnswer = detectIntentSimple(projectId, input, sessionId, languageCode);
         Message parsedAnswer = new Message(parseAnswer(rawAnswer), true);
@@ -59,22 +59,32 @@ public class DialogFlowBridge {
     private String detectIntentSimple(String projectId, String input, String sessionId, String languageCode) throws Exception {
         // Set default response text (in case of an error).
         String answer = "(Error getting intent response.)";
-        // Instantiates a client
+        // Instantiates a client.
         try (SessionsClient sessionsClient = SessionsClient.create()) {
-            // Set the session name using the sessionId (UUID) and projectID (my-project-id)
+            // Set the session name using the sessionId (UUID) and projectID (my-project-id).
             SessionName session = SessionName.of(projectId, sessionId);
             System.out.println("Session Path: " + session.toString());
 
-            // Set the text (hello) and language code (en-US) for the query
+            // Set the text (hello) and language code (en-US) for the query.
             TextInput.Builder textInput = TextInput.newBuilder().setText(input).setLanguageCode(languageCode);
 
-            // Build the query with the TextInput
+            // Build the query with the TextInput.
             QueryInput queryInput = QueryInput.newBuilder().setText(textInput).build();
+            Context context = Context.newBuilder().setName(session.toString() + "/contexts/" + "testcontext").setLifespanCount(999).build();      // <-- THIS ONE?
+            QueryParameters params = QueryParameters.newBuilder().addContexts(context).build();
 
-            // Performs the detect intent request
-            DetectIntentResponse response = sessionsClient.detectIntent(session, queryInput);
+            // Build a new DetectIntentRequest with determined input and parameters.
+            DetectIntentRequest request = DetectIntentRequest.newBuilder()
+                    .setQueryInput(queryInput)
+                    .setQueryParams(params)
+                    .setSession(session.toString())
+                    .build();
 
-            // Display the query result
+            // Performs the detect intent request.
+            // DetectIntentResponse response = sessionsClient.detectIntent(session, queryInput);
+            DetectIntentResponse response = sessionsClient.detectIntent(request);
+
+            // Display the query result.
             QueryResult queryResult = response.getQueryResult();
 
             System.out.println("====================");
@@ -82,6 +92,7 @@ public class DialogFlowBridge {
             System.out.format("Detected Intent: %s (confidence: %f)\n",
                     queryResult.getIntent().getDisplayName(), queryResult.getIntentDetectionConfidence());
             System.out.format("Fulfillment Text: '%s'\n", queryResult.getFulfillmentText());
+            System.out.format("Output contexts: '%s'\n", queryResult.getOutputContextsList());
             answer = queryResult.getFulfillmentText();
         }
         return answer;
