@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public class PersonalityManager {
 
-    private Map<String, Float> emotions;    // Emotions that range from 0.0f to 1.0f.
+    private Map<String, Float> emotions;    // Emotions that range from -1.0f to 1.0f.
     private Map<String, Float> personality;     // Personality traits that range from 0.0f to 1.0f.
     private Map<String, String> colors;     // Colors assigned to specific (extreme) emotions.
 
@@ -39,8 +39,8 @@ public class PersonalityManager {
     private void initEmotions() {
         emotions = new HashMap<>();
 
-        // Patience (1.0f) <---> Frustration (0.0f).
-        emotions.put("Patience", 0.5f);
+        // Patience (1.0f) <---> Frustration (-1.0f).
+        emotions.put("Patience", 0.0f);
     }
 
     private void initPersonality() {
@@ -80,9 +80,14 @@ public class PersonalityManager {
     private void initColors() {
         colors = new HashMap<>();
 
-        // Every possible emotions needs a LOW and HIGH defined extreme.
+        // Every possible emotion needs a LOW and HIGH defined extreme.
         colors.put("Patience_LOW", "#f08080");
         colors.put("Patience_HIGH", "#b0e0e6");
+    }
+
+    private String determineSuggestedColor() {
+        // First check for the currently strongest emotion.
+        
     }
 
     private void temp() {
