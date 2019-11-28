@@ -10,6 +10,7 @@ public class Message {
     private String content;
     private String time;
     private Boolean fromBot;
+    private String suggestedColor;
 
     public Message() {
 
@@ -19,6 +20,13 @@ public class Message {
         this.content = content;
         this.time = time;
         this.fromBot = fromBot;
+    }
+
+    public Message(String content, String time, Boolean fromBot, String suggestedColor) {
+        this.content = content;
+        this.time = time;
+        this.fromBot = fromBot;
+        this.suggestedColor = suggestedColor;
     }
 
     public Message(String content, Boolean fromBot) {
@@ -49,6 +57,14 @@ public class Message {
 
     public void setFromBot(Boolean fromBot) {
         this.fromBot = fromBot;
+    }
+
+    public String getSuggestedColor() {
+        return suggestedColor;
+    }
+
+    public void setSuggestedColor(String suggestedColor) {
+        this.suggestedColor = suggestedColor;
     }
 
     /**
