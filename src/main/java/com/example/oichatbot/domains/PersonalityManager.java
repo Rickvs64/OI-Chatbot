@@ -99,7 +99,7 @@ public class PersonalityManager {
         // First we need to convert emotions' range (-1 to 1) to a standard lerp alpha (0 to 1).
         Float alpha = normalizeToRange(emotions.get(emotion), -1.0f, 1.0f);
         // Parse as HEX string, does NOT support transparency.
-        return "#" + Integer.toHexString(lerpColors(colorLow, colorHigh, alpha).getRGB()).substring(2);
+        return "#" + Integer.toHexString(lerpColors(colorHigh, colorLow, alpha).getRGB()).substring(2);
     }
 
     private Color lerpColors(Color c1, Color c2, Float alpha) {
