@@ -11,8 +11,9 @@ import java.util.Map;
  */
 public class PersonalityManager {
 
-    private Map<String, Float> emotions;    // Emotions that range from -1.0f to 1.0f.
-    private Map<String, Float> personality;     // Personality qualities that range from -1.0f to 1.0f.
+    private Map<String, Float> emotions;    // Emotions that range from 0.0f to 1.0f.
+    private Map<String, Float> personality;     // Personality traits that range from 0.0f to 1.0f.
+    private Map<String, String> colors;     // Colors assigned to specific (extreme) emotions.
 
     private boolean allowDynamicEmotions = false;
     private boolean allowDynamicPersonality = false;
@@ -22,6 +23,8 @@ public class PersonalityManager {
     private PersonalityManager() {
         initEmotions();
         initPersonality();
+        initColors();
+        temp();
     }
 
     // Static method to maintain one persistent instance.
@@ -36,17 +39,17 @@ public class PersonalityManager {
     private void initEmotions() {
         emotions = new HashMap<>();
 
-        // Patience (1.0f) <---> Frustration (-1.0f).
-        emotions.put("Patience", 0.0f);
+        // Patience (1.0f) <---> Frustration (0.0f).
+        emotions.put("Patience", 0.5f);
     }
 
     private void initPersonality() {
         personality = new HashMap<>();
 
         // Desire -> high values lead to expressing attraction and occasional dirty talk.
-        personality.put("Desire", 0.0f);
+        personality.put("Desire", 0.5f);
         // Curiosity -> high values lead to asking many questions and potentially coming across as "nosy".
-        personality.put("Curiosity", 0.0f);
+        personality.put("Curiosity", 0.5f);
     }
 
     public String getLeadingPersonality() {
@@ -74,8 +77,16 @@ public class PersonalityManager {
         return strings.get(highestIndex);
     }
 
+    private void initColors() {
+        colors = new HashMap<>();
+
+        // Every possible emotions needs a LOW and HIGH defined extreme.
+        colors.put("Patience_LOW", "#f08080");
+        colors.put("Patience_HIGH", "#b0e0e6");
+    }
+
     private void temp() {
-        // Just sets a default character trait for testing.
+        // Just sets a high default character trait for testing.
         // Using map.put() is fine since duplicates aren't allowed.
         personality.put("Desire", 1.0f);
     }
