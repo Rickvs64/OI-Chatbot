@@ -41,10 +41,13 @@ public class DialogFlowBridge {
 
         // Connect to DialogFlow and await response.
         String rawAnswer = detectIntentSimple(projectId, input, sessionId, languageCode, context);
-        // Parse answer for special tags, tweaking time format, etc.
+        // Parse answer for special tags and time format
         Message parsedAnswer = new Message(parseAnswer(rawAnswer), true);
 
-        // Todo: Determine message object's advanced parameters like suggested color.
+        // Determine and set suggested color.
+        String color = PersonalityManager.getInstance().determineSuggestedColor();
+        parsedAnswer.setSuggestedColor(color);
+        System.out.println("Suggested color: " + color);
 
         return parsedAnswer;
     }

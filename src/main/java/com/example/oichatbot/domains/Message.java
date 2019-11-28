@@ -35,6 +35,13 @@ public class Message {
         this.fromBot = fromBot;
     }
 
+    public Message(String content, Boolean fromBot, String suggestedColor) {
+        this.content = content;
+        this.time = getCurrentTime();
+        this.fromBot = fromBot;
+        this.suggestedColor = suggestedColor;
+    }
+
     public String getContent() {
         return content;
     }
