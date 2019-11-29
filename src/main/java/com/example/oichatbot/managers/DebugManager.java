@@ -17,6 +17,7 @@ public class DebugManager {
     private List<String> outroMessages;     // Possible messages to be used by the bot.
 
     private List<String> checkValueKeywords;    // Possible (first) words to use in a checkValue() request.
+    private List<String> setValueKeywords;    // Possible (first) words to use in a setValue() request.
 
     private String debugColor = "#DFDFDF";  // Default background color for debug messages in the front-end.
 
@@ -28,6 +29,7 @@ public class DebugManager {
         initIntroMessages();
         initOutroMessages();
         initCheckValueKeywords();
+        initSetValueKeywords();
     }
 
     // Static method to maintain one persistent instance.
@@ -135,10 +137,17 @@ public class DebugManager {
         if (recognizeCommandAsCheckValue(input.trim().toLowerCase())) {
             return checkValue(input.trim().toLowerCase());
         }
+        // Could be a "setValue" command.
+        if (recognizeCommandAsSetValue(input.trim().toLowerCase())) {
+            return setValue(input.trim().toLowerCase());
+        }
+
         return null;    // TEMP
 
         // Also has a setValue() method
-        // Also has a list() method? Would be really useful
+        // Increase/decrease commands?
+        // Also has a listTraits() method? Would be really useful
+        // Maybe listCommands() too
     }
 
 
@@ -217,5 +226,27 @@ public class DebugManager {
         }
 
         return response;
+    }
+
+    private Boolean recognizeCommandAsSetValue(String input) {
+        if (!input.contains(" ")) {
+            // Doesn't even contain a single whitespace - can't possibly be a valid setValue() request.
+            return false;
+        }
+
+        int i = input.indexOf(" ");     // First whitespace.
+        String firstWord = input.substring(0, i);   // First word.
+
+        return (setValueKeywords.contains(firstWord));
+    }
+
+    private void initSetValueKeywords() {
+        setValueKeywords = new ArrayList<>();
+        setValueKeywords.add("set");
+        setValueKeywords.add("change");
+    }
+
+    private String setValue(String input) {
+        
     }
 }
