@@ -16,6 +16,8 @@ public class DebugManager {
     private List<String> introMessages;     // Possible messages to be used by the bot.
     private List<String> outroMessages;     // Possible messages to be used by the bot.
 
+    private List<String> checkValueKeywords;    // Possible (first) words to use in a checkValue() request.
+
     private String debugColor = "#DFDFDF";  // Default background color for debug messages in the front-end.
 
     private static DebugManager instance = null;
@@ -25,6 +27,7 @@ public class DebugManager {
         initExitPhrases();
         initIntroMessages();
         initOutroMessages();
+        initCheckValueKeywords();
     }
 
     // Static method to maintain one persistent instance.
@@ -45,7 +48,7 @@ public class DebugManager {
 
     public Boolean wantsToExitDebug(String input) {
         String parsed = input.trim();
-        parsed = parsed.replaceAll("/^[A-Za-z]+$/", "");    // Letters and whitespaces.
+        parsed = parsed.replaceAll("/^[A-Za-z]+$/", "");    // Only letters and whitespaces.
         parsed = parsed.toLowerCase();
         return (exitPhrases.contains(parsed));
     }
@@ -93,10 +96,12 @@ public class DebugManager {
 
     private void initIntroMessages() {
         introMessages = new ArrayList<>();
-        introMessages.add("ENTERING DEBUG MODE.");
-        introMessages.add("ENTERING ANALYSIS MODE.");
-        introMessages.add("BEEP BOOP. ANALYSIS MODE NOW ENABLED.");
-        introMessages.add("ANALYSIS MODE ENABLED.");
+        introMessages.add("(DEBUG): Entering debug mode.");
+        introMessages.add("(DEBUG): Entering analysis mode.");
+        introMessages.add("(DEBUG): Beep boop. Analysis mode now enabled.");
+        introMessages.add("(DEBUG): Analysis mode enabled.");
+        introMessages.add("(DEBUG): Switched to debug mode.");
+        introMessages.add("(DEBUG): Switched to analysis mode.");
     }
 
     private void initOutroMessages() {
@@ -128,8 +133,9 @@ public class DebugManager {
     public String parseCommand(String input) {
         // Could be a "checkValue" command.
         if (recognizeCommandAsCheckValue(input.trim().toLowerCase())) {
-            // execute checkValue()
+            return checkValue(input.trim().toLowerCase());
         }
+        return null;    // TEMP
 
         // Also has a setValue() method
         // Also has a list() method? Would be really useful
@@ -153,6 +159,63 @@ public class DebugManager {
         int i = input.indexOf(" ");     // First whitespace.
         String firstWord = input.substring(0, i);   // First word.
 
+        return (checkValueKeywords.contains(firstWord));
+    }
 
+    private void initCheckValueKeywords() {
+        checkValueKeywords = new ArrayList<>();
+        checkValueKeywords.add("how");
+        checkValueKeywords.add("what");
+        checkValueKeywords.add("what's");
+    }
+
+    /**
+     * Check the value of one specified character trait or emotion.
+     * @param input Full input sentence, (hopefully) containing a trait or emotion.
+     * @return Output message displaying the appropriate value or warning that no matching emotion/trait was found.
+     */
+    private String checkValue(String input) {
+        String parsed = input.replaceAll("/^[A-Za-z]+$/", "");    // Only letters and whitespaces.
+
+        // Right now 'parsed' is one raw sentence.
+        // We will split it up into words and iterate through every single one until we detect a valid emotion/trait.
+        String[] words = parsed.split(" ");
+        String detectedMatch = "";  // Detected match, either a personality trait or an emotion.
+        Integer matchingMap = -1;   // 0 if it's a personality trait, 1 if it's an emotion.
+        Float value = 0.0f;
+        for (String w: words) {
+            // Make the first letter of the word uppercase, the rest stays lowercase.
+            String parsedWord = w.substring(0, 1).toUpperCase() + w.substring(1).toLowerCase();
+            if (PersonalityManager.getInstance().getPersonality().containsKey(parsedWord)) {
+                detectedMatch = parsedWord;
+                matchingMap = 0;
+                value = PersonalityManager.getInstance().getPersonality().get(parsedWord);
+                break;
+            }
+            else if (PersonalityManager.getInstance().getEmotions().containsKey(parsedWord)) {
+                detectedMatch = parsedWord;
+                matchingMap = 1;
+                value = PersonalityManager.getInstance().getEmotions().get(parsedWord);
+                break;
+            }
+        }
+
+        // We've iterated through every word (or until we found a match).
+        // If there is a match, we know which map it belongs to in PersonalityManager and its value.
+        String response = "";
+        switch (matchingMap) {
+            case 0:
+                response = "(DEBUG): Personality trait \"" + detectedMatch + "\" is currently set to: " + value.toString() + ".";
+                break;
+
+            case 1:
+                response = "(DEBUG): Emotion \"" + detectedMatch + "\" is currently set to: " + value.toString() + ".";
+                break;
+
+            default:
+                response = "(DEBUG): WARNING! Attempted to parse command as \"checkValue()\", but no matching trait or emotion was found.";
+        }
+
+        return response;
     }
 }

@@ -114,6 +114,14 @@ public class PersonalityManager {
         return (value - min) / (max - min);
     }
 
+    public Map<String, Float> getEmotions() {
+        return emotions;
+    }
+
+    public Map<String, Float> getPersonality() {
+        return personality;
+    }
+
     private void temp() {
         // Just sets a high default character trait for testing.
         // Using map.put() is fine since duplicates aren't allowed.
