@@ -38,14 +38,14 @@ public class DebugManager {
 
     public Boolean wantsToEnterDebug(String input) {
         String parsed = input.trim();
-        parsed = parsed.replaceAll("[^a-zA-Z0-9]", "");
+        parsed = parsed.replaceAll("/^[A-Za-z]+$/", "");    // Letters and whitespaces.
         parsed = parsed.toLowerCase();
         return (entryPhrases.contains(parsed));
     }
 
     public Boolean wantsToExitDebug(String input) {
         String parsed = input.trim();
-        parsed = parsed.replaceAll("[^a-zA-Z0-9]", "");
+        parsed = parsed.replaceAll("/^[A-Za-z]+$/", "");    // Letters and whitespaces.
         parsed = parsed.toLowerCase();
         return (exitPhrases.contains(parsed));
     }
