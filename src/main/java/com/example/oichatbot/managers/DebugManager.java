@@ -247,6 +247,34 @@ public class DebugManager {
     }
 
     private String setValue(String input) {
-        
+        // We will split it up into words and iterate through every single one until we detect a valid emotion/trait.
+        String[] words = input.split(" ");
+        String detectedMatch = "";  // Detected match, either a personality trait or an emotion.
+        Integer matchingMap = -1;   // 0 if it's a personality trait, 1 if it's an emotion.
+        for (String w: words) {
+            // Make the first letter of the word uppercase, the rest stays lowercase.
+            String parsedWord = w.substring(0, 1).toUpperCase() + w.substring(1).toLowerCase();
+            if (PersonalityManager.getInstance().getPersonality().containsKey(parsedWord)) {
+                detectedMatch = parsedWord;
+                matchingMap = 0;
+                break;
+            }
+            else if (PersonalityManager.getInstance().getEmotions().containsKey(parsedWord)) {
+                detectedMatch = parsedWord;
+                matchingMap = 1;
+                break;
+            }
+        }
+
+        String response = "";
+
+        // If we've not found a single matching emotion/trait, cancel this method early.
+        if (matchingMap == -1) {
+            response = "(DEBUG): WARNING! Attempted to parse command as \"setValue()\" but no matching trait or emotion was found.";
+            return response;
+        }
+
+        // If we've successfully detected an emotion/trait, we now need to determine what value to set it to.
+        if (matchingM
     }
 }
