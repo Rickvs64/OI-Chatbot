@@ -3,6 +3,8 @@ package com.example.oichatbot.managers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Holds debug information and methods (such as directly changing personality traits).
@@ -275,6 +277,37 @@ public class DebugManager {
         }
 
         // If we've successfully detected an emotion/trait, we now need to determine what value to set it to.
-        if (matchingM
+        Float value = -10.0f;
+        // Pattern p = Pattern.compile("^-?\\d*\\.\\d+|\\d+");
+        Pattern p = Pattern.compile("[-+]?\\d*\\.\\d+|[-+]?\\d+");  // Catches every possible variant of a positive or negative decimal.
+        Matcher m = p.matcher(input);
+        // We could use a while loop but there shouldn't be more results than one.
+        if (m.find()) {
+            value = Float.valueOf(m.group());
+            System.out.println(value);
+        }
+
+        // If the float is still at its absurd initial value we know we failed to find an acceptable float value from the input string.
+        // Cancel method early.
+        if (value == -10.0f) {
+            response = "(DEBUG): WARNING! Attempted to parse command as \"setValue()\". Emotion/trait \"" + detectedMatch + "\" was found but no valid float value could be detected in your command.";
+            return response;
+        }
+        switch (matchingMap) {
+            case 0:
+                PersonalityManager.getInstance().getPersonality().put(detectedMatch, value);
+                response = "(DEBUG): Set personality trait " + detectedMatch + " to " + value.toString() + ".";
+                break;
+
+            case 1:
+                PersonalityManager.getInstance().getEmotions().put(detectedMatch, value);
+                response = "(DEBUG): Set emotion " + detectedMatch + " to " + value.toString() + ".";
+                break;
+
+            default:
+                response = "(DEBUG): WARNING! Unexpected default case occurred in DebugManager.setValue().";
+                break;
+        }
+        return response;
     }
 }
