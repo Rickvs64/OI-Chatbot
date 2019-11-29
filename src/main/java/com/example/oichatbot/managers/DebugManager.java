@@ -296,12 +296,12 @@ public class DebugManager {
         switch (matchingMap) {
             case 0:
                 PersonalityManager.getInstance().getPersonality().put(detectedMatch, value);
-                response = "(DEBUG): Set personality trait " + detectedMatch + " to " + value.toString() + ".";
+                response = "(DEBUG): Personality trait altered: " + detectedMatch + " has been set to " + value.toString() + ".";
                 break;
 
             case 1:
                 PersonalityManager.getInstance().getEmotions().put(detectedMatch, value);
-                response = "(DEBUG): Set emotion " + detectedMatch + " to " + value.toString() + ".";
+                response = "(DEBUG): Emotion altered: " + detectedMatch + " has been set to " + value.toString() + ".";
                 break;
 
             default:
