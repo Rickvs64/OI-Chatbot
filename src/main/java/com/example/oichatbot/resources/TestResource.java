@@ -1,5 +1,6 @@
 package com.example.oichatbot.resources;
 
+import com.example.oichatbot.managers.DebugManager;
 import com.example.oichatbot.managers.DialogFlowBridge;
 import com.example.oichatbot.domains.Message;
 import com.google.api.gax.paging.Page;
@@ -57,7 +58,28 @@ public class TestResource {
      */
     @PostMapping(path = "/chat/post", consumes = "application/json", produces = "application/json")
     public Message chatSimple(@RequestBody Message message) throws Exception {
-        return DialogFlowBridge.getInstance().chat(message.getContent(), "en-US");
+        // First check whether we're (already) in DEBUG, which means the back-end directly handles this request without DialogFlow.
+        if (DebugManager.getInstance().inDebug()) {
+            if (DebugManager.getInstance().wantsToExitDebug()) {
+                // User wants to exit DEBUG.
+
+                return null;
+            }
+            else {
+                // Detect DEBUG intent and do stuff.
+
+                return null;
+            }
+        }
+        else if (DebugManager.getInstance().wantsToEnterDebug()) {
+            // User wants to enter DEBUG.
+
+            return null;
+        }
+        else {
+            // User is not currently in DEBUG and doesn't want to be, so we send their message to DialogFlow.
+            return DialogFlowBridge.getInstance().chat(message.getContent(), "en-US");
+        }
     }
 
     /**

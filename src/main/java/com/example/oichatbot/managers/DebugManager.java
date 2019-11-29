@@ -10,6 +10,7 @@ public class DebugManager {
     private static DebugManager instance = null;
 
     public DebugManager() {
+
     }
 
     // Static method to maintain one persistent instance.
@@ -21,7 +22,15 @@ public class DebugManager {
         return instance;
     }
 
-    public Boolean getInDebug() {
+    public Boolean wantsToEnterDebug() {
+        return false;
+    }
+
+    public Boolean wantsToExitDebug() {
+        return false;
+    }
+
+    public Boolean inDebug() {
         return inDebug;
     }
 

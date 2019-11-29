@@ -14,7 +14,7 @@ public class DialogFlowBridge {
     private static DialogFlowBridge instance = null;
 
     private DialogFlowBridge() {
-        // ...
+
     }
 
     // Static method to maintain one persistent instance.
