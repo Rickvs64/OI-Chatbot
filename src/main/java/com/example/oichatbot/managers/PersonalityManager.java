@@ -1,4 +1,4 @@
-package com.example.oichatbot.domains;
+package com.example.oichatbot.managers;
 
 import java.awt.*;
 import java.util.ArrayList;

@@ -1,5 +1,6 @@
-package com.example.oichatbot.domains;
+package com.example.oichatbot.managers;
 
+import com.example.oichatbot.domains.Message;
 import com.google.api.client.util.Lists;
 import com.google.cloud.dialogflow.v2.*;
 

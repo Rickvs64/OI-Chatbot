@@ -1,26 +1,15 @@
 package com.example.oichatbot.resources;
 
-import com.example.oichatbot.domains.DialogFlowBridge;
+import com.example.oichatbot.managers.DialogFlowBridge;
 import com.example.oichatbot.domains.Message;
-import com.example.oichatbot.domains.PersonalityManager;
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.google.api.client.json.GenericJson;
-import com.google.api.client.util.Lists;
-import com.google.api.client.util.Maps;
 import com.google.api.gax.paging.Page;
-import com.google.auth.Credentials;
-import com.google.auth.oauth2.ServiceAccountCredentials;
 import com.google.cloud.dialogflow.v2.*;
 import com.google.cloud.storage.Bucket;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
-import com.google.gson.Gson;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
