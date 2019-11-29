@@ -70,8 +70,11 @@ public class TestResource {
             }
             else {
                 // Detect DEBUG intent and do stuff.
-
-                return null;
+                String content = DebugManager.getInstance().parseCommand(message.getContent());
+                Message output = new Message(content, true, DebugManager.getInstance().getDebugColor());
+                System.out.println("Attempted to recognize as debug command: " + message.getContent());
+                System.out.println("Debug mode output: " + content);
+                return output;
             }
         }
         else if (DebugManager.getInstance().wantsToEnterDebug(message.getContent())) {

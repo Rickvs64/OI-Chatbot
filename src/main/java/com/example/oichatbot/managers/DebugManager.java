@@ -120,6 +120,21 @@ public class DebugManager {
         return outroMessages.get(randomIndex);
     }
 
+    /**
+     * Detect possible debug command and execute it accordingly - EXCLUDING enter/exit debug mode commands.
+     * @param input Command to try and execute.
+     * @return Response from bot (usually a confirmation message).
+     */
+    public String parseCommand(String input) {
+        // Could be a "checkValue" command.
+        if (recognizeCommandAsCheckValue(input.trim().toLowerCase())) {
+            // execute checkValue()
+        }
+
+        // Also has a setValue() method
+        // Also has a list() method? Would be really useful
+    }
+
 
     public Boolean inDebug() {
         return inDebug;
@@ -127,5 +142,17 @@ public class DebugManager {
 
     public String getDebugColor() {
         return debugColor;
+    }
+
+    private Boolean recognizeCommandAsCheckValue(String input) {
+        if (!input.contains(" ")) {
+            // Doesn't even contain a single whitespace - can't possibly be a valid checkValue() request.
+            return false;
+        }
+
+        int i = input.indexOf(" ");     // First whitespace.
+        String firstWord = input.substring(0, i);   // First word.
+
+
     }
 }
