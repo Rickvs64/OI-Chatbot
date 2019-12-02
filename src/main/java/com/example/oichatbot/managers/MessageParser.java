@@ -52,9 +52,11 @@ public class MessageParser {
         String[] segments = emotionBlock.split(";");
         if (checkModifier(segments[0], segments[1])) {
             // The text should be displayed.
+            System.out.println("SHOW IT");
         }
         else {
             // The text should not be displayed.
+            System.out.println("DO NOT SHOW IT");
         }
         return "temp";
     }
@@ -91,17 +93,19 @@ public class MessageParser {
         // Now just to determine the kind of check/operation and return true/false accordingly.
         String operation = modifier.substring(0, modifier.indexOf(value));
         System.out.println("Operation detected: " + operation);
+        Float valueAsFloat = Float.valueOf(value);
         switch (operation) {
             case "==":
-                // ...
-                break;
+                // return (PersonalityManager.getInstance().getEmotions().get(emotion) == valueAsFloat);
+                return (Math.abs(PersonalityManager.getInstance().getEmotions().get(emotion) - valueAsFloat) < 0.001);      // Comparing two floats with a small tolerance.
+
+            case "<":
+                return (PersonalityManager.getInstance().getEmotions().get(emotion) < valueAsFloat);
 
             default:
-                // ...
-                break;
+                // This shouldn't be reachable.
+                System.out.println("Problem in MessageParser.checkModifier(): Default case in switch operation reached.");
+                return false;
         }
-
-
-        return false;       // TEMP.
     }
 }
