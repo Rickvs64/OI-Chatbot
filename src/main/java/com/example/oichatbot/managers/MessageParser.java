@@ -52,13 +52,21 @@ public class MessageParser {
         String[] segments = emotionBlock.split(";");
         if (checkModifier(segments[0], segments[1])) {
             // The text should be displayed.
-            System.out.println("SHOW IT");
+            System.out.println("Modifier matches current emotion level, showing the block.");
+
+            // Replace entire [ ] block with the to-be-displayed string.
+            // todo
+            System.out.println(message);
         }
         else {
             // The text should not be displayed.
-            System.out.println("DO NOT SHOW IT");
+            System.out.println("Modifier does not match current emotion level, NOT showing the block.");
+
+            // Clear entire [ ] block.
+            // todo
+            System.out.println(message);
         }
-        return "temp";
+        return message;
     }
 
     private String formatTime(String message) {
