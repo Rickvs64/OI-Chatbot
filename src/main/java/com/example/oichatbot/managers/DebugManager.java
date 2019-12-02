@@ -284,7 +284,7 @@ public class DebugManager {
         // We could use a while loop but there shouldn't be more results than one.
         if (m.find()) {
             value = Float.valueOf(m.group());
-            System.out.println(value);
+            System.out.println("Detected requested new value: " + value);
         }
 
         // If the float is still at its absurd initial value we know we failed to find an acceptable float value from the input string.

@@ -1,5 +1,8 @@
 package com.example.oichatbot.managers;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Parse raw messages from DialogFlow to dynamically add/alter/remove blocks of text.
  * Singleton class.
@@ -69,6 +72,36 @@ public class MessageParser {
             return false;
         }
 
-        
+        String value = "undefined";     // Value to compare with. Stored as string since we need to find the index in the input string later (unformatted).
+        Pattern p = Pattern.compile("[-+]?\\d*\\.\\d+|[-+]?\\d+");  // Catches every possible variant of a positive or negative decimal.
+        Matcher m = p.matcher(modifier);
+        // We could use a while loop but there shouldn't be more results than one.
+        if (m.find()) {
+            value = m.group();
+            System.out.println(value);
+        }
+
+        // Quick check to determine value has actually been set (and isn't still at its initial absurd value).
+        if (value.equals("undefined")) {
+            System.out.println("Problem in MessageParser.checkModifier(): No detected value to compare with.");
+            return false;
+        }
+
+        // At this point we have the emotion and the value to compare with (as String).
+        // Now just to determine the kind of check/operation and return true/false accordingly.
+        String operation = modifier.substring(0, modifier.indexOf(value));
+        System.out.println("Operation detected: " + operation);
+        switch (operation) {
+            case "==":
+                // ...
+                break;
+
+            default:
+                // ...
+                break;
+        }
+
+
+        return false;       // TEMP.
     }
 }
