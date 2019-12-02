@@ -45,6 +45,7 @@ public class MessageParser {
         Integer startIndex = message.indexOf("[");
         Integer endIndex = message.indexOf("]");
         String emotionBlock = message.substring(startIndex + 1, endIndex);  // Without the [ ].
+        String emotionBlock2 = message.substring(startIndex, endIndex + 1);  // With the [ ].
         System.out.println("Detected emotion block: " + emotionBlock);
 
         // Split the block up in its three individual segments.
@@ -55,15 +56,16 @@ public class MessageParser {
             System.out.println("Modifier matches current emotion level, showing the block.");
 
             // Replace entire [ ] block with the to-be-displayed string.
-            // todo
+            // Original string up to [ (exclusive), then segments[2], then original string after ] (exclusive).
+            message = message.substring(0, startIndex) + segments[2] + message.substring(endIndex + 1);
             System.out.println(message);
         }
         else {
             // The text should not be displayed.
             System.out.println("Modifier does not match current emotion level, NOT showing the block.");
-
             // Clear entire [ ] block.
-            // todo
+            // Original string up to [ (exclusive), then (empty), then original string after ] (exclusive).
+            message = message.substring(0, startIndex) + "" + message.substring(endIndex + 1);
             System.out.println(message);
         }
         return message;
@@ -88,7 +90,7 @@ public class MessageParser {
         // We could use a while loop but there shouldn't be more results than one.
         if (m.find()) {
             value = m.group();
-            System.out.println(value);
+            System.out.println("Value to compare with: " + value);
         }
 
         // Quick check to determine value has actually been set (and isn't still at its initial absurd value).
@@ -109,6 +111,15 @@ public class MessageParser {
 
             case "<":
                 return (PersonalityManager.getInstance().getEmotions().get(emotion) < valueAsFloat);
+
+            case ">":
+                return (PersonalityManager.getInstance().getEmotions().get(emotion) > valueAsFloat);
+
+            case "<=":
+                return (PersonalityManager.getInstance().getEmotions().get(emotion) <= valueAsFloat);
+
+            case ">=":
+                return (PersonalityManager.getInstance().getEmotions().get(emotion) >= valueAsFloat);
 
             default:
                 // This shouldn't be reachable.
