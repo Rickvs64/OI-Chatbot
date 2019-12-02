@@ -143,13 +143,13 @@ public class DialogFlowBridge {
         return intents;
     }
 
-    private String determineProjectId() {
-        // todo: Possibly choose between different project ID's depending on current emotions/personality.
-        return "openinno";
-    }
-
+    /**
+     * Parse a raw answer to dynamically show/remove special tagged blocks of text depending on emotions.
+     * @param rawAnswer The raw answer containing special tags.
+     * @return Parsed answer, cleaned up and converted into a readable format.
+     */
     private String parseAnswer(String rawAnswer) {
-        // todo: Parse DialogFlow's response (with its optional cursewords etc.) to a readable format.
-        return rawAnswer;
+        // Let the special MessageParser class handle this.
+        return MessageParser.getInstance().parseMessage(rawAnswer);
     }
 }
