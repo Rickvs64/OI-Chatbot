@@ -144,12 +144,8 @@ public class DebugManager {
             return setValue(input.trim().toLowerCase());
         }
 
-        return null;    // TEMP
-
-        // Also has a setValue() method
-        // Increase/decrease commands?
-        // Also has a listTraits() method? Would be really useful
-        // Maybe listCommands() too
+        // No recognized command.
+        return "(DEBUG): Warning! No known command recognized.";
     }
 
 
@@ -178,6 +174,7 @@ public class DebugManager {
         checkValueKeywords.add("how");
         checkValueKeywords.add("what");
         checkValueKeywords.add("what's");
+        checkValueKeywords.add("get");
     }
 
     /**
