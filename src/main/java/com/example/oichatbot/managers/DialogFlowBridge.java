@@ -79,7 +79,10 @@ public class DialogFlowBridge {
             // Build the query with the TextInput and Context as parameter.
             QueryInput queryInput = QueryInput.newBuilder().setText(textInput).build();
             Context context = Context.newBuilder().setName(session.toString() + "/contexts/" + contextString).setLifespanCount(1).build();      // <-- THIS ONE?
-            QueryParameters params = QueryParameters.newBuilder().addContexts(context).build();
+
+            QueryParameters params = QueryParameters.newBuilder()
+                    .addContexts(context)
+                    .build();
 
             // Build a new DetectIntentRequest with determined input and parameters.
             DetectIntentRequest request = DetectIntentRequest.newBuilder()
