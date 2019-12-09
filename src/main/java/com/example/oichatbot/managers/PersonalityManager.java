@@ -48,9 +48,12 @@ public class PersonalityManager {
         personality = new HashMap<>();
 
         // Desire -> high values lead to expressing attraction and occasional dirty talk.
-        personality.put("Desire", 0.5f);
+        personality.put("Desire", 0.0f);
         // Curiosity -> high values lead to asking many questions and potentially coming across as "nosy".
-        personality.put("Curiosity", 0.5f);
+        personality.put("Curiosity", 0.0f);
+
+        // Default threshold -> other emotions need to be higher than this value otherwise the default intents will be used.
+        personality.put("Default", 0.2f);
     }
 
     public String getLeadingPersonality() {
