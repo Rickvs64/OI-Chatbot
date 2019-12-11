@@ -20,6 +20,7 @@ public class DebugManager {
 
     private List<String> checkValueKeywords;    // Possible (first) words to use in a checkValue() request.
     private List<String> setValueKeywords;    // Possible (first) words to use in a setValue() request.
+    private List<String> playMuteKeywords;      // Possible (first) words to use in a playMute() request.
 
     private String debugColor = "#DFDFDF";  // Default background color for debug messages in the front-end.
 
@@ -32,6 +33,7 @@ public class DebugManager {
         initOutroMessages();
         initCheckValueKeywords();
         initSetValueKeywords();
+        initPlayMuteKeywords();
     }
 
     // Static method to maintain one persistent instance.
@@ -142,6 +144,10 @@ public class DebugManager {
         // Could be a "setValue" command.
         if (recognizeCommandAsSetValue(input.trim().toLowerCase())) {
             return setValue(input.trim().toLowerCase());
+        }
+        // Could be a "play/mute" command.
+        if (recognizeCommandAsPlayMute(input.trim().toLowerCase())) {
+            return playMute();
         }
 
         // No recognized command.
@@ -306,5 +312,28 @@ public class DebugManager {
                 break;
         }
         return response;
+    }
+
+    private void initPlayMuteKeywords() {
+        playMuteKeywords = new ArrayList<>();
+        playMuteKeywords.add("mute");
+        playMuteKeywords.add("unmute");
+        playMuteKeywords.add("play");
+        playMuteKeywords.add("toggle");
+    }
+
+    private boolean recognizeCommandAsPlayMute(String input) {
+        int i = input.indexOf(" ");     // First whitespace.
+        String firstWord = input.substring(0, i);   // First word.
+
+        return (playMuteKeywords.contains(firstWord));
+    }
+
+    /**
+     * Toggle audio output from SpeechManager.
+     * Prevents unnecessary cost calculation from Google Cloud.
+     */
+    private void playMute() {
+        
     }
 }
