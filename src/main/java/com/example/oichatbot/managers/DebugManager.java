@@ -333,7 +333,14 @@ public class DebugManager {
      * Toggle audio output from SpeechManager.
      * Prevents unnecessary cost calculation from Google Cloud.
      */
-    private void playMute() {
-        
+    private String playMute() {
+        if (SpeechManager.getInstance().toggleAudio()) {
+            // Audio should now play.
+            return "(DEBUG): Audio output has been enabled.";
+        }
+        else {
+            // Audio should be muted.
+            return "(DEBUG): Audio output has been disabled.";
+        }
     }
 }

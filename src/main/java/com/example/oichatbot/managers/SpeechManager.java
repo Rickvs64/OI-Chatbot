@@ -21,6 +21,15 @@ public class SpeechManager {
         return instance;
     }
 
+    /**
+     * Toggle audio output (inverts boolean).
+     * @return Boolean (true if should play, false if muted).
+     */
+    public boolean toggleAudio() {
+        shouldPlayAudio = !shouldPlayAudio;
+        return shouldPlayAudio;
+    }
+
     public boolean shouldPlayAudio() {
         return shouldPlayAudio;
     }
