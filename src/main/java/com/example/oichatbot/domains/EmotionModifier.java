@@ -12,6 +12,12 @@ public class EmotionModifier {
     public EmotionModifier() {
     }
 
+    public EmotionModifier(String relevantEmotion, String relevantWord, Float modification) {
+        this.relevantEmotion = relevantEmotion;
+        this.relevantWord = relevantWord;
+        this.modification = modification;
+    }
+
     public String getRelevantEmotion() {
         return relevantEmotion;
     }
