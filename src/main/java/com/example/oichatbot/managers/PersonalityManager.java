@@ -185,6 +185,11 @@ public class PersonalityManager {
         personality.put("Desire", 1.0f);    // Set 'Desire' as leading trait.
 
         emotions.put("Patience", -1.0f);    // Extremely frustrated.
+
+
+        for (EmotionModifier modifier: modifiers) {
+            System.out.println(modifier.getRelevantWord());
+        }
     }
 
 }
