@@ -191,12 +191,12 @@ public class PersonalityManager {
      */
     private void checkForRegisteredPhrase(String word) {
         for (EmotionModifier modifier: modifiers) {
-            if (modifier.getRelevantWord() == word.toLowerCase()) {
+            if (word.toLowerCase().equals(modifier.getRelevantWord())) {
                 Float prevValue = emotions.get(modifier.getRelevantEmotion());
                 Float newValue = clamp((prevValue + (modifier.getModification() * globalModifyMultiplier)), -1.0f, 1.0f);
                 emotions.put(modifier.getRelevantEmotion(), newValue);
                 System.out.println("Detected phrase: " + modifier.getRelevantWord());
-                System.out.println("Modified emotion \"" + modifier.getRelevantEmotion() + "\": " + prevValue + "->");
+                System.out.println("Modified emotion \"" + modifier.getRelevantEmotion() + "\": " + prevValue + "->" + newValue);
             }
         }
     }
