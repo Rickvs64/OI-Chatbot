@@ -172,8 +172,44 @@ public class PersonalityManager {
         }
     }
 
+    /**
+     * Called by DialogFlowBridge, this method checks an input query for registered phrases and changes emotions accordingly.
+     * E.g. using many curse words will lower the bot's patience value.
+     * @param input Input sentence to scan for registered phrases.
+     */
     public void alterEmotions(String input) {
-        
+        List<String> words = Arrays.asList(input.split("\\s+"));
+        for (String word: words) {
+            // Iterate through every word from the input sentence (rather than iterating through modifiers.json)
+            checkForRegisteredPhrase(word);
+        }
+    }
+
+    /**
+     * Check a word for a potential match in modifiers.json and alter relevant emotion accordingly.
+     * @param word Input phrase.
+     */
+    private void checkForRegisteredPhrase(String word) {
+        for (EmotionModifier modifier: modifiers) {
+            if (modifier.getRelevantWord() == word.toLowerCase()) {
+                Float prevValue = emotions.get(modifier.getRelevantEmotion());
+                Float newValue = clamp((prevValue + (modifier.getModification() * globalModifyMultiplier)), -1.0f, 1.0f);
+                emotions.put(modifier.getRelevantEmotion(), newValue);
+                System.out.println("Detected phrase: " + modifier.getRelevantWord());
+                System.out.println("Modified emotion \"" + modifier.getRelevantEmotion() + "\": " + prevValue + "->");
+            }
+        }
+    }
+
+    /**
+     * Clamp a float value between min and max. Interesting that Java does not have this by default.
+     * @param value Value to clamp.
+     * @param min Minimum.
+     * @param max Maximum.
+     * @return
+     */
+    private Float clamp(Float value, Float min, Float max) {
+        return Math.max(min, Math.min(max, value));
     }
 
     public Map<String, Float> getEmotions() {
