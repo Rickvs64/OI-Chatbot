@@ -27,7 +27,7 @@ public class PersonalityManager {
     private boolean allowDynamicPersonality = false;
 
     private List<EmotionModifier> modifiers;    // Emotion modifiers that alter the chatbot's behavior based on input terms.
-    private Float globalModifyMultiplier = 1.0f;    // Global emotion modifier scale. Higher values mean more significant "mood swings".
+    private Float globalModifyMultiplier = 2.0f;    // Global emotion modifier scale. Higher values mean more significant "mood swings".
 
     private static PersonalityManager instance = null;
 
