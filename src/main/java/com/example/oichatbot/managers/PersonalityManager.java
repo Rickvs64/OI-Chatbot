@@ -3,6 +3,10 @@ package com.example.oichatbot.managers;
 import com.example.oichatbot.domains.EmotionModifier;
 
 import java.awt.*;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -119,8 +123,49 @@ public class PersonalityManager {
         return (value - min) / (max - min);
     }
 
-    private List<EmotionModifier> loadEmotionModifiersFromFile() {
-        return null;        // todo
+    /**
+     * Read a list of EmotionModifiers from a locally stored file.
+     * @param fileName Name of file to open.
+     * @return List of EmotionModifiers read from the given file.
+     */
+    private List<EmotionModifier> readEmotionModifiersFromFile(String fileName) {
+        List<EmotionModifier> modifiers = new ArrayList<>();
+        try {
+            FileInputStream fis = new FileInputStream(fileName);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            boolean dataRemaining = true;
+
+            while (dataRemaining) {
+                EmotionModifier obj = (EmotionModifier)ois.readObject();
+                if(obj != null)
+                    modifiers.add(obj);
+                else
+                    dataRemaining = false;
+            }
+            return modifiers;
+        }
+        catch (Exception e) {
+            System.out.println("Exception in PersonalityManager.readEmotionModifiersFromFile():");
+            System.out.println(e);
+            return modifiers;
+        }
+    }
+
+    /**
+     * Write a list of standard emotions to a file.
+     * @param fileName Name of file to write to.
+     */
+    private void writeEmotionModifiersToFile(String fileName, List<EmotionModifier> emotionModifiers) {
+        try {
+            FileOutputStream fos = new FileOutputStream(fileName);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(emotionModifiers);
+            oos.close();
+        }
+        catch (Exception e) {
+            System.out.println("Exception in PersonalityManager.writeEmotionModifiersFromFile():");
+            System.out.println(e);
+        }
     }
 
     public Map<String, Float> getEmotions() {
@@ -138,9 +183,11 @@ public class PersonalityManager {
 
         emotions.put("Patience", -1.0f);    // Extremely frustrated.
 
-
-
-
+        List<EmotionModifier> test = new ArrayList<>();
+        test.add(new EmotionModifier("Patience", "please", 0.1f));
+        test.add(new EmotionModifier("Patience", "thanks", 0.1f));
+        test.add(new EmotionModifier("Patience", "fuck", -0.5f));
+        writeEmotionModifiersToFile("modifiers", test);
     }
 
 }
