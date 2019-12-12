@@ -21,12 +21,27 @@
   },
   {
     "relevantEmotion": "Patience",
+    "relevantWord": "thanks",
+    "modification": 0.1
+  },
+  {
+    "relevantEmotion": "Patience",
     "relevantWord": "tenk",
     "modification": 0.1
   },
   {
     "relevantEmotion": "Patience",
+    "relevantWord": "tenks",
+    "modification": 0.1
+  },
+  {
+    "relevantEmotion": "Patience",
     "relevantWord": "sorry",
+    "modification": 0.1
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "sowwy",
     "modification": 0.1
   },
   {
@@ -41,12 +56,22 @@
   },
   {
     "relevantEmotion": "Patience",
-    "relevantWord": "forgive me",
+    "relevantWord": "forgive",
     "modification": 0.1
   },
   {
     "relevantEmotion": "Patience",
     "relevantWord": "fuck",
+    "modification": -0.2
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "fucking",
+    "modification": -0.2
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "fucks",
     "modification": -0.2
   },
   {
@@ -66,7 +91,17 @@
   },
   {
     "relevantEmotion": "Patience",
+    "relevantWord": "asshole",
+    "modification": -0.2
+  },
+  {
+    "relevantEmotion": "Patience",
     "relevantWord": "fock",
+    "modification": -0.2
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "focking",
     "modification": -0.2
   },
   {
@@ -76,23 +111,38 @@
   },
   {
     "relevantEmotion": "Patience",
+    "relevantWord": "fukn",
+    "modification": -0.2
+  },
+  {
+    "relevantEmotion": "Patience",
     "relevantWord": "suck",
     "modification": -0.2
   },
   {
     "relevantEmotion": "Patience",
-    "relevantWord": "twat",
+    "relevantWord": "sucks",
     "modification": -0.2
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "twat",
+    "modification": -0.3
   },
   {
     "relevantEmotion": "Patience",
     "relevantWord": "jerk",
-    "modification": -0.2
+    "modification": -0.3
   },
   {
     "relevantEmotion": "Patience",
     "relevantWord": "bitch",
-    "modification": -0.2
+    "modification": -0.3
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "slut",
+    "modification": -0.3
   },
   {
     "relevantEmotion": "Patience",
@@ -102,7 +152,7 @@
   {
     "relevantEmotion": "Patience",
     "relevantWord": "jew",
-    "modification": -0.2
+    "modification": -0.5
   },
   {
     "relevantEmotion": "Patience",
@@ -112,12 +162,12 @@
   {
     "relevantEmotion": "Patience",
     "relevantWord": "mongoloid",
-    "modification": -0.2
+    "modification": -0.3
   },
   {
     "relevantEmotion": "Patience",
     "relevantWord": "retard",
-    "modification": -0.2
+    "modification": -0.3
   },
   {
     "relevantEmotion": "Patience",
@@ -126,28 +176,43 @@
   },
   {
     "relevantEmotion": "Patience",
-    "relevantWord": "trash",
+    "relevantWord": "shits",
     "modification": -0.2
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "trash",
+    "modification": -0.3
   },
   {
     "relevantEmotion": "Patience",
     "relevantWord": "noob",
-    "modification": -0.2
+    "modification": -0.3
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "nub",
+    "modification": -0.3
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "newb",
+    "modification": -0.3
   },
   {
     "relevantEmotion": "Patience",
     "relevantWord": "liberal",
-    "modification": -0.2
+    "modification": -0.3
   },
   {
     "relevantEmotion": "Patience",
     "relevantWord": "bimbo",
-    "modification": -0.2
+    "modification": -0.3
   },
   {
     "relevantEmotion": "Patience",
     "relevantWord": "idiot",
-    "modification": -0.2
+    "modification": -0.3
   },
   {
     "relevantEmotion": "Patience",
@@ -157,26 +222,36 @@
   {
     "relevantEmotion": "Patience",
     "relevantWord": "moron",
-    "modification": -0.2
+    "modification": -0.3
   },
   {
     "relevantEmotion": "Patience",
     "relevantWord": "nigger",
-    "modification": -0.2
+    "modification": -0.5
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "nigga",
+    "modification": -0.5
   },
   {
     "relevantEmotion": "Patience",
     "relevantWord": "pedo",
-    "modification": -0.2
+    "modification": -0.3
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "pedophile",
+    "modification": -0.3
   },
   {
     "relevantEmotion": "Patience",
     "relevantWord": "weeb",
-    "modification": -0.2
+    "modification": -0.3
   },
   {
     "relevantEmotion": "Patience",
     "relevantWord": "furry",
-    "modification": -0.2
+    "modification": -0.3
   }
 ]
