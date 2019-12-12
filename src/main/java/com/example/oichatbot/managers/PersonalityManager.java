@@ -1,12 +1,10 @@
 package com.example.oichatbot.managers;
 
 import com.example.oichatbot.domains.EmotionModifier;
+import com.google.gson.Gson;
 
 import java.awt.*;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,12 +29,16 @@ public class PersonalityManager {
         initEmotions();
         initPersonality();
         initColors();
-        temp();
+        try {
+            temp();
+        }
+        catch (Exception e) {
+
+        }
     }
 
     // Static method to maintain one persistent instance.
-    public static PersonalityManager getInstance()
-    {
+    public static PersonalityManager getInstance() {
         if (instance == null)
             instance = new PersonalityManager();
 
@@ -129,43 +131,20 @@ public class PersonalityManager {
      * @return List of EmotionModifiers read from the given file.
      */
     private List<EmotionModifier> readEmotionModifiersFromFile(String fileName) {
-        List<EmotionModifier> modifiers = new ArrayList<>();
-        try {
-            FileInputStream fis = new FileInputStream(fileName);
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            boolean dataRemaining = true;
-
-            while (dataRemaining) {
-                EmotionModifier obj = (EmotionModifier)ois.readObject();
-                if(obj != null)
-                    modifiers.add(obj);
-                else
-                    dataRemaining = false;
-            }
-            return modifiers;
-        }
-        catch (Exception e) {
-            System.out.println("Exception in PersonalityManager.readEmotionModifiersFromFile():");
-            System.out.println(e);
-            return modifiers;
-        }
+        return null;    // todo
     }
 
     /**
      * Write a list of standard emotions to a file.
      * @param fileName Name of file to write to.
      */
-    private void writeEmotionModifiersToFile(String fileName, List<EmotionModifier> emotionModifiers) {
-        try {
-            FileOutputStream fos = new FileOutputStream(fileName);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(emotionModifiers);
-            oos.close();
-        }
-        catch (Exception e) {
-            System.out.println("Exception in PersonalityManager.writeEmotionModifiersFromFile():");
-            System.out.println(e);
-        }
+    private void writeEmotionModifiersToFile(String fileName, List<EmotionModifier> emotionModifiers) throws IOException {
+        Gson gson = new Gson();
+        Writer writer = new FileWriter(fileName);
+
+        gson.toJson(emotionModifiers, writer);
+        writer.flush();
+        writer.close();
     }
 
     public Map<String, Float> getEmotions() {
@@ -176,18 +155,23 @@ public class PersonalityManager {
         return personality;
     }
 
-    private void temp() {
+    private void temp() throws IOException {
         // Just sets a high default character trait for testing.
         // Using map.put() is fine since duplicates aren't allowed.
         personality.put("Desire", 1.0f);    // Set 'Desire' as leading trait.
 
         emotions.put("Patience", -1.0f);    // Extremely frustrated.
 
-        List<EmotionModifier> test = new ArrayList<>();
-        test.add(new EmotionModifier("Patience", "please", 0.1f));
-        test.add(new EmotionModifier("Patience", "thanks", 0.1f));
-        test.add(new EmotionModifier("Patience", "fuck", -0.5f));
-        writeEmotionModifiersToFile("modifiers", test);
+        try {
+            List<EmotionModifier> test = new ArrayList<>();
+            test.add(new EmotionModifier("Patience", "please", 0.1f));
+            test.add(new EmotionModifier("Patience", "thanks", 0.1f));
+            test.add(new EmotionModifier("Patience", "fuck", -0.5f));
+            writeEmotionModifiersToFile("modifiers.json", test);
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
 }
