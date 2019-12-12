@@ -2,13 +2,16 @@ package com.example.oichatbot.managers;
 
 import com.example.oichatbot.domains.EmotionModifier;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
 
 import java.awt.*;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.lang.reflect.Type;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Tracks all current character qualities and emotions.
@@ -23,18 +26,16 @@ public class PersonalityManager {
     private boolean allowDynamicEmotions = false;
     private boolean allowDynamicPersonality = false;
 
+    private List<EmotionModifier> modifiers;    // Emotion modifiers that alter the chatbot's behavior based on input terms.
+
     private static PersonalityManager instance = null;
 
     private PersonalityManager() {
         initEmotions();
         initPersonality();
         initColors();
-        try {
-            temp();
-        }
-        catch (Exception e) {
-
-        }
+        modifiers = readEmotionModifiersFromFile("modifiers.json");
+        temp();
     }
 
     // Static method to maintain one persistent instance.
@@ -131,20 +132,43 @@ public class PersonalityManager {
      * @return List of EmotionModifiers read from the given file.
      */
     private List<EmotionModifier> readEmotionModifiersFromFile(String fileName) {
-        return null;    // todo
+        try {
+            InputStream is = new FileInputStream(fileName);
+            BufferedReader buf = new BufferedReader(new InputStreamReader(is));
+            String line = buf.readLine();
+            StringBuilder sb = new StringBuilder();
+            while (line != null) {
+                sb.append(line).append("\n");
+                line = buf.readLine();
+            }
+            String fileAsString = sb.toString();
+
+            EmotionModifier[] modifierArray = new Gson().fromJson(fileAsString, EmotionModifier[].class);
+            return Arrays.asList(modifierArray);
+        }
+        catch (Exception e) {
+            System.out.println(e);
+            return new ArrayList<EmotionModifier>();
+        }
+
     }
 
     /**
      * Write a list of standard emotions to a file.
      * @param fileName Name of file to write to.
      */
-    private void writeEmotionModifiersToFile(String fileName, List<EmotionModifier> emotionModifiers) throws IOException {
-        Gson gson = new Gson();
-        Writer writer = new FileWriter(fileName);
+    private void writeEmotionModifiersToFile(String fileName, List<EmotionModifier> emotionModifiers) {
+        try {
+            Gson gson = new Gson();
+            Writer writer = new FileWriter(fileName);
 
-        gson.toJson(emotionModifiers, writer);
-        writer.flush();
-        writer.close();
+            gson.toJson(emotionModifiers, writer);
+            writer.flush();
+            writer.close();
+        }
+        catch (Exception e) {
+            // ...
+        }
     }
 
     public Map<String, Float> getEmotions() {
@@ -155,23 +179,12 @@ public class PersonalityManager {
         return personality;
     }
 
-    private void temp() throws IOException {
+    private void temp() {
         // Just sets a high default character trait for testing.
         // Using map.put() is fine since duplicates aren't allowed.
         personality.put("Desire", 1.0f);    // Set 'Desire' as leading trait.
 
         emotions.put("Patience", -1.0f);    // Extremely frustrated.
-
-        try {
-            List<EmotionModifier> test = new ArrayList<>();
-            test.add(new EmotionModifier("Patience", "please", 0.1f));
-            test.add(new EmotionModifier("Patience", "thanks", 0.1f));
-            test.add(new EmotionModifier("Patience", "fuck", -0.5f));
-            writeEmotionModifiersToFile("modifiers.json", test);
-        }
-        catch (Exception e) {
-            System.out.println(e);
-        }
     }
 
 }
