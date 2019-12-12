@@ -27,6 +27,7 @@ public class PersonalityManager {
     private boolean allowDynamicPersonality = false;
 
     private List<EmotionModifier> modifiers;    // Emotion modifiers that alter the chatbot's behavior based on input terms.
+    private Float globalModifyMultiplier = 1.0f;    // Global emotion modifier scale. Higher values mean more significant "mood swings".
 
     private static PersonalityManager instance = null;
 
@@ -171,6 +172,10 @@ public class PersonalityManager {
         }
     }
 
+    public void alterEmotions(String input) {
+        
+    }
+
     public Map<String, Float> getEmotions() {
         return emotions;
     }
@@ -179,17 +184,20 @@ public class PersonalityManager {
         return personality;
     }
 
+    public Float getGlobalModifyMultiplier() {
+        return globalModifyMultiplier;
+    }
+
+    public void setGlobalModifyMultiplier(Float globalModifyMultiplier) {
+        this.globalModifyMultiplier = globalModifyMultiplier;
+    }
+
     private void temp() {
         // Just sets a high default character trait for testing.
         // Using map.put() is fine since duplicates aren't allowed.
         personality.put("Desire", 1.0f);    // Set 'Desire' as leading trait.
 
         emotions.put("Patience", -1.0f);    // Extremely frustrated.
-
-
-        for (EmotionModifier modifier: modifiers) {
-            System.out.println(modifier.getRelevantWord());
-        }
     }
 
 }

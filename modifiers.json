@@ -6,12 +6,177 @@
   },
   {
     "relevantEmotion": "Patience",
-    "relevantWord": "thanks",
+    "relevantWord": "pls",
+    "modification": 0.1
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "plz",
+    "modification": 0.1
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "thank",
+    "modification": 0.1
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "tenk",
+    "modification": 0.1
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "sorry",
+    "modification": 0.1
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "sry",
+    "modification": 0.1
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "sorz",
+    "modification": 0.1
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "forgive me",
     "modification": 0.1
   },
   {
     "relevantEmotion": "Patience",
     "relevantWord": "fuck",
-    "modification": -0.5
+    "modification": -0.2
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "dick",
+    "modification": -0.2
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "cunt",
+    "modification": -0.2
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "ass",
+    "modification": -0.2
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "fock",
+    "modification": -0.2
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "fuk",
+    "modification": -0.1
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "suck",
+    "modification": -0.2
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "twat",
+    "modification": -0.2
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "jerk",
+    "modification": -0.2
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "bitch",
+    "modification": -0.2
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "hell",
+    "modification": -0.2
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "jew",
+    "modification": -0.2
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "cancer",
+    "modification": -0.2
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "mongoloid",
+    "modification": -0.2
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "retard",
+    "modification": -0.2
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "shit",
+    "modification": -0.2
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "trash",
+    "modification": -0.2
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "noob",
+    "modification": -0.2
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "liberal",
+    "modification": -0.2
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "bimbo",
+    "modification": -0.2
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "idiot",
+    "modification": -0.2
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "stupid",
+    "modification": -0.2
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "moron",
+    "modification": -0.2
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "nigger",
+    "modification": -0.2
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "pedo",
+    "modification": -0.2
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "weeb",
+    "modification": -0.2
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "furry",
+    "modification": -0.2
   }
 ]

@@ -32,7 +32,8 @@ public class DialogFlowBridge {
      * @return
      */
     public Message chat(String input, String languageCode) throws Exception {
-        // Todo: Use PersonalityManager to determine if and how much its emotions/personality are altered.
+        // Alter emotion values based on user input.
+        PersonalityManager.getInstance().alterEmotions(input);
 
         String projectId = "openinno";
         String sessionId = "123456";
