@@ -1,10 +1,12 @@
 package com.example.oichatbot.domains;
 
+import java.io.Serializable;
+
 /**
  * Holds information about a specific term or phrase and how it affects the bot's emotions.
  * For example, using the word "please" may increase its "patience" emotion by a small amount.
  */
-public class EmotionModifier {
+public class EmotionModifier implements Serializable {
     private String relevantEmotion;
     private String relevantWord;
     private Float modification;

@@ -1,5 +1,7 @@
 package com.example.oichatbot.managers;
 
+import com.example.oichatbot.domains.EmotionModifier;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -117,6 +119,10 @@ public class PersonalityManager {
         return (value - min) / (max - min);
     }
 
+    private List<EmotionModifier> loadEmotionModifiersFromFile() {
+        return null;        // todo
+    }
+
     public Map<String, Float> getEmotions() {
         return emotions;
     }
@@ -131,6 +137,10 @@ public class PersonalityManager {
         personality.put("Desire", 1.0f);    // Set 'Desire' as leading trait.
 
         emotions.put("Patience", -1.0f);    // Extremely frustrated.
+
+
+
+
     }
 
 }
