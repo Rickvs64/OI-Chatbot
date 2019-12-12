@@ -1,6 +1,26 @@
 [
   {
     "relevantEmotion": "Patience",
+    "relevantWord": "hello",
+    "modification": 0.1
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "hey",
+    "modification": 0.1
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "hi",
+    "modification": 0.1
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "good",
+    "modification": 0.1
+  },
+  {
+    "relevantEmotion": "Patience",
     "relevantWord": "please",
     "modification": 0.1
   },
