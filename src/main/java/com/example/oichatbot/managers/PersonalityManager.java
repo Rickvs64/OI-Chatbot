@@ -228,12 +228,15 @@ public class PersonalityManager {
         this.globalModifyMultiplier = globalModifyMultiplier;
     }
 
+    /**
+     * Temporary test method to set default personality extremes.
+     */
     private void temp() {
         // Just sets a high default character trait for testing.
         // Using map.put() is fine since duplicates aren't allowed.
         personality.put("Desire", 1.0f);    // Set 'Desire' as leading trait.
 
-        emotions.put("Patience", -1.0f);    // Extremely frustrated.
+        emotions.put("Patience", 1.0f);    // Extremely patient.
     }
 
 }
