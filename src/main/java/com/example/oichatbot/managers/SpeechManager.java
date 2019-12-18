@@ -2,7 +2,9 @@ package com.example.oichatbot.managers;
 
 import com.google.cloud.texttospeech.v1.*;
 import com.google.protobuf.ByteString;
+import javazoom.jl.player.Player;
 
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -69,7 +71,17 @@ public class SpeechManager {
             try (OutputStream out = new FileOutputStream("output.mp3")) {
                 out.write(audioContents.toByteArray());
                 System.out.println("Audio content written to file \"output.mp3\"");
-                
+
+                try {
+
+                    FileInputStream fis = new FileInputStream("output.mp3");
+                    Player playMP3 = new Player(fis);
+
+                    playMP3.play();
+
+                } catch(Exception e) {
+                    System.out.println(e);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
