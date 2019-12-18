@@ -51,6 +51,10 @@ public class DialogFlowBridge {
         parsedAnswer.setSuggestedColor(color);
         System.out.println("Suggested color: " + color);
 
+        // Play speech (audio)
+        if (SpeechManager.getInstance().shouldPlayAudio())
+            SpeechManager.getInstance().say(parsedAnswer.getContent());
+
         return parsedAnswer;
     }
 
