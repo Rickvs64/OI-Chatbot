@@ -11,6 +11,7 @@ public class Message {
     private String time;
     private Boolean fromBot;
     private String suggestedColor;
+    private String audioFile = "";
 
     public Message() {
 
@@ -72,6 +73,14 @@ public class Message {
 
     public void setSuggestedColor(String suggestedColor) {
         this.suggestedColor = suggestedColor;
+    }
+
+    public String getAudioFile() {
+        return audioFile;
+    }
+
+    public void setAudioFile(String audioFile) {
+        this.audioFile = audioFile;
     }
 
     /**

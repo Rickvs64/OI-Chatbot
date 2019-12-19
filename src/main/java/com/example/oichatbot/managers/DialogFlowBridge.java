@@ -51,9 +51,9 @@ public class DialogFlowBridge {
         parsedAnswer.setSuggestedColor(color);
         System.out.println("Suggested color: " + color);
 
-        // Play speech (audio)
+        // Set audio data if text-to-speech is enabled.
         if (SpeechManager.getInstance().shouldPlayAudio())
-            SpeechManager.getInstance().say(parsedAnswer.getContent());
+            parsedAnswer.setAudioFile(SpeechManager.getInstance().say(parsedAnswer.getContent(), "output.mp3"));
 
         return parsedAnswer;
     }
