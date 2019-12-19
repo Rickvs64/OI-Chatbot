@@ -76,6 +76,7 @@ public class SpeechManager {
 
                 // This used to be handled in the back-end as a temporary test method.
                 // playAudio(fileName);
+                // Now we encode the audio file to Base64 so it can be sent in the original POST response.
                 audioContent = encodeFileToBase64(new File(fileName));
             }
         } catch (IOException e) {
