@@ -6,6 +6,8 @@ import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.util.Base64;
 
 /**
  * Responsible for text-to-speech conversion and audio output.
@@ -74,15 +76,22 @@ public class SpeechManager {
 
                 // This used to be handled in the back-end as a temporary test method.
                 // playAudio(fileName);
-
-                // Return the contents of the newly stored audio file.
-                /// todo audioFile =
+                audioContent = encodeFileToBase64(new File(fileName));
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         return audioContent;
+    }
+
+    private static String encodeFileToBase64(File file) {
+        try {
+            byte[] fileContent = Files.readAllBytes(file.toPath());
+            return Base64.getEncoder().encodeToString(fileContent);
+        } catch (IOException e) {
+            throw new IllegalStateException("could not read file " + file, e);
+        }
     }
 
     public boolean shouldPlayAudio() {
