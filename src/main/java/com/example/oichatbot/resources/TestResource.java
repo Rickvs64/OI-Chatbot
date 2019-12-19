@@ -11,6 +11,18 @@ import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import java.io.*;
+import java.net.MalformedURLException;
+
+
+import java.io.File;
 import java.util.List;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -109,6 +121,24 @@ public class TestResource {
      */
     private static List<Intent> listIntents(String projectId) throws Exception {
         return DialogFlowBridge.getInstance().listIntents(projectId);
+    }
+
+    /**
+     * Test method to download mp3 file.
+     * @return
+     */
+    @RequestMapping("/luuk")
+    public ResponseEntity<Resource> serveFile (){
+
+        File file = new File("output.mp3");
+        Resource resource = null;
+        try {
+            resource = new UrlResource(file.toURI());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"").body(resource);
+
     }
 
 }
