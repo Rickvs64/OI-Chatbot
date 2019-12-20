@@ -143,7 +143,7 @@ public class SpeechManager {
     private void initBasePitches() {
         basePitches = new HashMap<>();
         basePitches.put("Default", 0.0d);
-        basePitches.put("Desire", -6.0d);
+        basePitches.put("Desire", 0.0d);
         basePitches.put("Curiosity", 4.0d);
     }
 
