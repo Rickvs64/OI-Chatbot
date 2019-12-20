@@ -8,6 +8,8 @@ import javazoom.jl.player.Player;
 import java.io.*;
 import java.nio.file.Files;
 import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Responsible for text-to-speech conversion and audio output.
@@ -15,10 +17,16 @@ import java.util.Base64;
  */
 public class SpeechManager {
     private boolean shouldPlayAudio = true;
+    private Map<String, SsmlVoiceGender> voiceTypes;
+    private Map<String, Double> basePitches;
+    private Map<String, Double> baseRates;
 
     private static SpeechManager instance = null;
 
     public SpeechManager() {
+        initVoiceTypes();
+        initBasePitches();
+        initBaseRates();
     }
 
     // Static method to maintain one persistent instance.
@@ -52,14 +60,14 @@ public class SpeechManager {
             // Build the voice request, select the language code ("en-US") and the ssml voice gender.
             VoiceSelectionParams voice = VoiceSelectionParams.newBuilder()
                     .setLanguageCode("en-US")
-                    .setSsmlGender(SsmlVoiceGender.NEUTRAL)
+                    .setSsmlGender(determineVoiceType(PersonalityManager.getInstance().getLeadingPersonality()))
                     .build();
 
             // Select the type of audio file you want returned.
             AudioConfig audioConfig = AudioConfig.newBuilder()
                     .setAudioEncoding(AudioEncoding.MP3)
-                    .setPitch(20.0d)
-                    .setSpeakingRate(0.5d)
+                    .setPitch(determineBasePitch(PersonalityManager.getInstance().getLeadingPersonality()))
+                    .setSpeakingRate(determineBaseRate(PersonalityManager.getInstance().getLeadingPersonality()))
                     .build();
 
             // Perform the text-to-speech request on the text input with the selected voice parameters and
@@ -87,13 +95,75 @@ public class SpeechManager {
         return audioContent;
     }
 
-    private static String encodeFileToBase64(File file) {
+    /**
+     * Encode an audio file (.mp3)'s content to Base64.
+     * @param file Audio file (preferably .mp3 format).
+     * @return The Base64 content as String.
+     */
+    private String encodeFileToBase64(File file) {
         try {
             byte[] fileContent = Files.readAllBytes(file.toPath());
             return Base64.getEncoder().encodeToString(fileContent);
         } catch (IOException e) {
             throw new IllegalStateException("could not read file " + file, e);
         }
+    }
+
+    /**
+     * Determine the right text-to-speech voice type depending on the current leading personality.
+     * @param leadingTrait
+     * @return The recommended SsmlVoiceGender enum value.
+     */
+    private SsmlVoiceGender determineVoiceType(String leadingTrait) {
+        return voiceTypes.get(leadingTrait);
+    }
+
+    /**
+     * Initialize the voiceTypes Map with voice type recommendations.
+     */
+    private void initVoiceTypes() {
+        voiceTypes = new HashMap<>();
+        voiceTypes.put("Default", SsmlVoiceGender.NEUTRAL);
+        voiceTypes.put("Desire", SsmlVoiceGender.FEMALE);
+        voiceTypes.put("Curiosity", SsmlVoiceGender.MALE);
+    }
+
+    /**
+     * Determine a recommended voice pitch based on the current leading personality trait.
+     * @param leadingTrait Currently leading character trait.
+     * @return The suggested (base) voice pitch.
+     */
+    private Double determineBasePitch(String leadingTrait) {
+        return basePitches.get(leadingTrait);
+    }
+
+    /**
+     * Initialize the basePitches Map with voice pitch recommendations.
+     */
+    private void initBasePitches() {
+        basePitches = new HashMap<>();
+        basePitches.put("Default", 0.0d);
+        basePitches.put("Desire", -6.0d);
+        basePitches.put("Curiosity", 4.0d);
+    }
+
+    /**
+     * Determine a recommended speaking rate based on the current leading personality trait.
+     * @param leadingTrait Currently leading character trait.
+     * @return The suggested (base) speakign rate.
+     */
+    private Double determineBaseRate(String leadingTrait) {
+        return baseRates.get(leadingTrait);
+    }
+
+    /**
+     * Initialize the baseRates Map with speaking rate recommendations.
+     */
+    private void initBaseRates() {
+        baseRates = new HashMap<>();
+        baseRates.put("Default", 1.0d);
+        baseRates.put("Desire", 0.7d);
+        baseRates.put("Curiosity", 1.2d);
     }
 
     public boolean shouldPlayAudio() {
