@@ -67,7 +67,7 @@ public class SpeechManager {
             AudioConfig audioConfig = AudioConfig.newBuilder()
                     .setAudioEncoding(AudioEncoding.MP3)
                     .setPitch(determineBasePitch() + determineAdditionalPitch())
-                    .setSpeakingRate(determineBaseRate())
+                    .setSpeakingRate(determineBaseRate() + determineAdditionalRate())
                     .build();
 
             // Perform the text-to-speech request on the text input with the selected voice parameters and
@@ -192,7 +192,7 @@ public class SpeechManager {
         // Multiplied by -1 since LOW patience requires HIGH pitch.
         value += (PersonalityManager.getInstance().getEmotions().get("Patience") * maxAdditionalRate * -1.0f);
 
-        value = clamp(value, 0.5d, 3.0d);
+        value = clamp(value, 0.0d, 3.0d);
 
         System.out.println("Final speaking rate: " + value);
         return value;
