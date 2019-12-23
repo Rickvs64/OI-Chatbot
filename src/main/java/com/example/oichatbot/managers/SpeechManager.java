@@ -179,6 +179,36 @@ public class SpeechManager {
         return value;
     }
 
+    /**
+     * Calculate the amount of extra speed to be added (or substracted) to the final speech output.
+     * Based on its current emotions.
+     * @return The final addition to its base speaking rate.
+     */
+    private Double determineAdditionalRate() {
+        // Add an additional value based on the 'Patience' emotion.
+        // In the future more emotions may be considered.
+        Double value = 0.0d;
+
+        // Multiplied by -1 since LOW patience requires HIGH pitch.
+        value += (PersonalityManager.getInstance().getEmotions().get("Patience") * maxAdditionalRate * -1.0f);
+
+        value = clamp(value, 0.5d, 3.0d);
+
+        System.out.println("Final speaking rate: " + value);
+        return value;
+    }
+
+    /**
+     * Clamp a float value between min and max. Interesting that Java does not have this by default.
+     * @param value Value to clamp.
+     * @param min Minimum.
+     * @param max Maximum.
+     * @return
+     */
+    private Double clamp(Double value, Double min, Double max) {
+        return Math.max(min, Math.min(max, value));
+    }
+
     public boolean shouldPlayAudio() {
         return shouldPlayAudio;
     }
