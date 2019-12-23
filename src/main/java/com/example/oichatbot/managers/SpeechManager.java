@@ -2,8 +2,6 @@ package com.example.oichatbot.managers;
 
 import com.google.cloud.texttospeech.v1.*;
 import com.google.protobuf.ByteString;
-import javazoom.jl.decoder.JavaLayerException;
-import javazoom.jl.player.Player;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -20,6 +18,8 @@ public class SpeechManager {
     private Map<String, SsmlVoiceGender> voiceTypes;
     private Map<String, Double> basePitches;
     private Map<String, Double> baseRates;
+    private Float maxAdditionalPitch = 3.0f;        // Max amount of additional pitch based on emotions.
+    private Float maxAdditionalRate = 5.0f;         // Max amount of additional rate based on emotions.
 
     private static SpeechManager instance = null;
 
@@ -162,8 +162,21 @@ public class SpeechManager {
         baseRates.put("Curiosity", 1.2d);
     }
 
+    /**
+     * Calculate the amount of extra pitch to be added (or substracted) to the final speech output.
+     * Based on its current emotions.
+     * @return The final addition to its base pitch.
+     */
     private Double determineAdditionalPitch() {
-        
+        // Add an additional value based on the 'Patience' emotion.
+        // In the future more emotions may be considered.
+        Double value = 0.0d;
+
+        // Multiplied by -1 since LOW patience requires HIGH pitch.
+        value += (PersonalityManager.getInstance().getEmotions().get("Patience") * maxAdditionalPitch * -1.0f);
+
+        System.out.println("Final voice pitch: " + value);
+        return value;
     }
 
     public boolean shouldPlayAudio() {
