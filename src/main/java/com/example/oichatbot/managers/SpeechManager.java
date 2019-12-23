@@ -20,7 +20,7 @@ public class SpeechManager {
     private Map<String, Double> baseRates;
     private Float maxAdditionalPitch = 3.0f;        // Max amount of additional pitch based on emotions.
     private Float maxAdditionalRate = 0.4f;         // Max amount of additional rate based on emotions.
-    private Float maxAdditionalVolume = 30.0f;         // Max amount of additional volume based on emotions.
+    private Float maxAdditionalVolume = 16.0f;         // Max amount of additional volume based on emotions.
 
     private static SpeechManager instance = null;
 
@@ -213,9 +213,9 @@ public class SpeechManager {
         // Multiplied by -1 since LOW patience requires HIGH volume.
         value += (PersonalityManager.getInstance().getEmotions().get("Patience") * maxAdditionalVolume * -1.0f);
 
-        value = clamp(value, 0.0d, 999.0d);
+        value = clamp(value, 0.0d, 16.0d);      // +16db is Google's maximum audio gain.
 
-        System.out.println("Final speaking rate: " + value);
+        System.out.println("Final volume gain: " + value);
         return value;
     }
 
