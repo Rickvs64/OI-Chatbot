@@ -19,7 +19,7 @@ public class SpeechManager {
     private Map<String, Double> basePitches;
     private Map<String, Double> baseRates;
     private Float maxAdditionalPitch = 3.0f;        // Max amount of additional pitch based on emotions.
-    private Float maxAdditionalRate = 5.0f;         // Max amount of additional rate based on emotions.
+    private Float maxAdditionalRate = 0.4f;         // Max amount of additional rate based on emotions.
 
     private static SpeechManager instance = null;
 
@@ -159,7 +159,7 @@ public class SpeechManager {
         baseRates = new HashMap<>();
         baseRates.put("Default", 1.0d);
         baseRates.put("Desire", 0.7d);
-        baseRates.put("Curiosity", 1.2d);
+        baseRates.put("Curiosity", 1.1d);
     }
 
     /**
@@ -189,7 +189,7 @@ public class SpeechManager {
         // In the future more emotions may be considered.
         Double value = 0.0d;
 
-        // Multiplied by -1 since LOW patience requires HIGH pitch.
+        // Multiplied by -1 since LOW patience requires HIGH speaking rate.
         value += (PersonalityManager.getInstance().getEmotions().get("Patience") * maxAdditionalRate * -1.0f);
 
         value = clamp(value, 0.0d, 3.0d);
