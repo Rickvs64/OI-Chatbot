@@ -20,6 +20,7 @@ public class SpeechManager {
     private Map<String, Double> baseRates;
     private Float maxAdditionalPitch = 3.0f;        // Max amount of additional pitch based on emotions.
     private Float maxAdditionalRate = 0.4f;         // Max amount of additional rate based on emotions.
+    private Float maxAdditionalVolume = 30.0f;         // Max amount of additional volume based on emotions.
 
     private static SpeechManager instance = null;
 
@@ -68,6 +69,7 @@ public class SpeechManager {
                     .setAudioEncoding(AudioEncoding.MP3)
                     .setPitch(determineBasePitch() + determineAdditionalPitch())
                     .setSpeakingRate(determineBaseRate() + determineAdditionalRate())
+                    .setVolumeGainDb(determineAdditionalVolume())
                     .build();
 
             // Perform the text-to-speech request on the text input with the selected voice parameters and
@@ -180,7 +182,7 @@ public class SpeechManager {
     }
 
     /**
-     * Calculate the amount of extra speed to be added (or substracted) to the final speech output.
+     * Calculate the amount of extra speed to be added to the final speech output.
      * Based on its current emotions.
      * @return The final addition to its base speaking rate.
      */
@@ -192,7 +194,26 @@ public class SpeechManager {
         // Multiplied by -1 since LOW patience requires HIGH speaking rate.
         value += (PersonalityManager.getInstance().getEmotions().get("Patience") * maxAdditionalRate * -1.0f);
 
-        value = clamp(value, 0.0d, 3.0d);
+        value = clamp(value, 0.0d, 999.0d);
+
+        System.out.println("Final speaking rate: " + value);
+        return value;
+    }
+
+    /**
+     * Calculate the amount of extra volume to be added to the final speech output.
+     * Based on its current emotions.
+     * @return The final addition to its base voice volume.
+     */
+    private Double determineAdditionalVolume() {
+        // Add an additional value based on the 'Patience' emotion.
+        // In the future more emotions may be considered.
+        Double value = 0.0d;
+
+        // Multiplied by -1 since LOW patience requires HIGH volume.
+        value += (PersonalityManager.getInstance().getEmotions().get("Patience") * maxAdditionalVolume * -1.0f);
+
+        value = clamp(value, 0.0d, 999.0d);
 
         System.out.println("Final speaking rate: " + value);
         return value;
