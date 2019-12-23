@@ -19,7 +19,7 @@ public class SpeechManager {
     private Map<String, Double> basePitches;
     private Map<String, Double> baseRates;
     private Float maxAdditionalPitch = 3.0f;        // Max amount of additional pitch based on emotions.
-    private Float maxAdditionalRate = 0.4f;         // Max amount of additional rate based on emotions.
+    private Float maxAdditionalRate = 0.3f;         // Max amount of additional rate based on emotions.
     private Float maxAdditionalVolume = 16.0f;         // Max amount of additional volume based on emotions.
 
     private static SpeechManager instance = null;
@@ -143,7 +143,7 @@ public class SpeechManager {
         basePitches = new HashMap<>();
         basePitches.put("Default", 0.0d);
         basePitches.put("Desire", 0.0d);
-        basePitches.put("Curiosity", 4.0d);
+        basePitches.put("Curiosity", 2.5d);
     }
 
     /**
@@ -161,7 +161,7 @@ public class SpeechManager {
         baseRates = new HashMap<>();
         baseRates.put("Default", 1.0d);
         baseRates.put("Desire", 0.7d);
-        baseRates.put("Curiosity", 1.1d);
+        baseRates.put("Curiosity", 1.05d);
     }
 
     /**
