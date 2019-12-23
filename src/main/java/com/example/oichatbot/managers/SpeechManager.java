@@ -60,20 +60,19 @@ public class SpeechManager {
             // Build the voice request, select the language code ("en-US") and the ssml voice gender.
             VoiceSelectionParams voice = VoiceSelectionParams.newBuilder()
                     .setLanguageCode("en-US")
-                    .setSsmlGender(determineVoiceType(PersonalityManager.getInstance().getLeadingPersonality()))
+                    .setSsmlGender(determineVoiceType())
                     .build();
 
             // Select the type of audio file you want returned.
             AudioConfig audioConfig = AudioConfig.newBuilder()
                     .setAudioEncoding(AudioEncoding.MP3)
-                    .setPitch(determineBasePitch(PersonalityManager.getInstance().getLeadingPersonality()))
-                    .setSpeakingRate(determineBaseRate(PersonalityManager.getInstance().getLeadingPersonality()))
+                    .setPitch(determineBasePitch() + determineAdditionalPitch())
+                    .setSpeakingRate(determineBaseRate())
                     .build();
 
             // Perform the text-to-speech request on the text input with the selected voice parameters and
             // audio file type.
-            SynthesizeSpeechResponse response = textToSpeechClient.synthesizeSpeech(input, voice,
-                    audioConfig);
+            SynthesizeSpeechResponse response = textToSpeechClient.synthesizeSpeech(input, voice, audioConfig);
 
             // Get the audio contents from the response.
             ByteString audioContents = response.getAudioContent();
@@ -111,11 +110,10 @@ public class SpeechManager {
 
     /**
      * Determine the right text-to-speech voice type depending on the current leading personality.
-     * @param leadingTrait
      * @return The recommended SsmlVoiceGender enum value.
      */
-    private SsmlVoiceGender determineVoiceType(String leadingTrait) {
-        return voiceTypes.get(leadingTrait);
+    private SsmlVoiceGender determineVoiceType() {
+        return voiceTypes.get(PersonalityManager.getInstance().getLeadingPersonality());
     }
 
     /**
@@ -130,11 +128,10 @@ public class SpeechManager {
 
     /**
      * Determine a recommended voice pitch based on the current leading personality trait.
-     * @param leadingTrait Currently leading character trait.
      * @return The suggested (base) voice pitch.
      */
-    private Double determineBasePitch(String leadingTrait) {
-        return basePitches.get(leadingTrait);
+    private Double determineBasePitch() {
+        return basePitches.get(PersonalityManager.getInstance().getLeadingPersonality());
     }
 
     /**
@@ -149,11 +146,10 @@ public class SpeechManager {
 
     /**
      * Determine a recommended speaking rate based on the current leading personality trait.
-     * @param leadingTrait Currently leading character trait.
-     * @return The suggested (base) speakign rate.
+     * @return The suggested (base) speaking rate.
      */
-    private Double determineBaseRate(String leadingTrait) {
-        return baseRates.get(leadingTrait);
+    private Double determineBaseRate() {
+        return baseRates.get(PersonalityManager.getInstance().getLeadingPersonality());
     }
 
     /**
@@ -164,6 +160,10 @@ public class SpeechManager {
         baseRates.put("Default", 1.0d);
         baseRates.put("Desire", 0.7d);
         baseRates.put("Curiosity", 1.2d);
+    }
+
+    private Double determineAdditionalPitch() {
+        
     }
 
     public boolean shouldPlayAudio() {
