@@ -52,7 +52,7 @@ public class ExceptionManager {
 
         // The lower patience drops, the lower it becomes as a normalized value (0-1).
         // Thus also making it MORE likely for a random normalized float to be higher.
-        return (new (Random().nextFloat() * maxExtremeChance) > normalize(patience, -1.0f, maxPatience));
+        return ((new Random().nextFloat() * maxExtremeChance) > normalize(patience, -1.0f, maxPatience));
     }
 
     /**
