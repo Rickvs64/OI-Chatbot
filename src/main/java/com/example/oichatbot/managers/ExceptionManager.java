@@ -62,6 +62,8 @@ public class ExceptionManager {
      * @return The complete message object (including font and audio properties).
      */
     public Message chatExtreme(String input) {
+        System.out.println("Decided to show an EXTREME.");
+
         // Alter emotion values based on user input.
         PersonalityManager.getInstance().alterEmotions(input);
 
@@ -79,7 +81,8 @@ public class ExceptionManager {
         // Set the message object's audio property (Base64) based on the relevant .mp3 file.
         if (SpeechManager.getInstance().shouldPlayAudio())
             output.setAudioFile(readAudioContent(output.getContent()));
-        
+
+        System.out.println("Returning extreme: " + output.getContent());
         return output;
     }
 
