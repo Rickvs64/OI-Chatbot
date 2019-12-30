@@ -101,7 +101,7 @@ public class TestResource {
             // User is not currently in DEBUG and doesn't want to be, so we send their message to DialogFlow.
             // UNLESS we determine it's time for an extreme response/exception.
             if (ExceptionManager.getInstance().shouldRespondExtreme()) {
-                return ExceptionManager.getInstance().getExtremeResponse();
+                return ExceptionManager.getInstance().chatExtreme(message.getContent());
             }
             else {
                 return DialogFlowBridge.getInstance().chat(message.getContent(), "en-US");
