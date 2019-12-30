@@ -118,10 +118,9 @@ public class ExceptionManager {
         // Set everything to lowercase, replace special characters (including whitespaces) and add .mp3 to its name.
         String fileName = response.toLowerCase();
         fileName = fileName.replaceAll("[^a-zA-Z0-9]", "");
-        fileName += ".mp3";
 
         // Try to read an audio file with this exact matching name.
-        return encodeFileToBase64(new File(fileName));
+        return encodeFileToBase64(new File("extremes/" + fileName + ".mp3"));
     }
 
     /**
