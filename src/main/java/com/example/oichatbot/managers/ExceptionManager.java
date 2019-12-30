@@ -2,7 +2,11 @@ package com.example.oichatbot.managers;
 
 import com.example.oichatbot.domains.Message;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Random;
 
@@ -75,8 +79,7 @@ public class ExceptionManager {
         // Set the message object's audio property (Base64) based on the relevant .mp3 file.
         if (SpeechManager.getInstance().shouldPlayAudio())
             output.setAudioFile(readAudioContent(output.getContent()));
-
-
+        
         return output;
     }
 
@@ -108,7 +111,28 @@ public class ExceptionManager {
      * @return The Base64 file content of the relevant .mp3 audio file.
      */
     private String readAudioContent(String response) {
+        // Converting the response string to an audio file name.
+        // Set everything to lowercase, replace special characters (including whitespaces) and add .mp3 to its name.
+        String fileName = response.toLowerCase();
+        fileName = fileName.replaceAll("[^a-zA-Z0-9]", "");
+        fileName += ".mp3";
 
+        // Try to read an audio file with this exact matching name.
+        return encodeFileToBase64(new File(fileName));
+    }
+
+    /**
+     * Encode an audio file (.mp3)'s content to Base64.
+     * @param file Audio file (preferably .mp3 format).
+     * @return The Base64 content as String.
+     */
+    private String encodeFileToBase64(File file) {
+        try {
+            byte[] fileContent = Files.readAllBytes(file.toPath());
+            return Base64.getEncoder().encodeToString(fileContent);
+        } catch (IOException e) {
+            throw new IllegalStateException("could not read file " + file, e);
+        }
     }
 
     /**
