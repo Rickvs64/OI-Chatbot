@@ -1,5 +1,7 @@
 package com.example.oichatbot.managers;
 
+import com.example.oichatbot.domains.Message;
+
 import java.util.Random;
 
 /**
@@ -36,9 +38,17 @@ public class ExceptionManager {
         if (patience > maxPatience)
             return false;
 
-        // The lower patience drops, the lower it becomes as a normalized value (0-1)
+        // The lower patience drops, the lower it becomes as a normalized value (0-1).
         // Thus also making it MORE likely for a random normalized float to be higher.
         return (new Random().nextFloat() > normalize(patience, -1.0f, maxPatience));
+    }
+
+    /**
+     * Return a (random) extreme response/exception.
+     * @return The complete message object (including font and audio properties).
+     */
+    public Message getExtremeResponse() {
+        
     }
 
     /**

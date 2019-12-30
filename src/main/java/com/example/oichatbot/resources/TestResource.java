@@ -3,6 +3,7 @@ package com.example.oichatbot.resources;
 import com.example.oichatbot.managers.DebugManager;
 import com.example.oichatbot.managers.DialogFlowBridge;
 import com.example.oichatbot.domains.Message;
+import com.example.oichatbot.managers.ExceptionManager;
 import com.example.oichatbot.managers.PersonalityManager;
 import com.google.api.gax.paging.Page;
 import com.google.cloud.dialogflow.v2.*;
@@ -98,7 +99,13 @@ public class TestResource {
         }
         else {
             // User is not currently in DEBUG and doesn't want to be, so we send their message to DialogFlow.
-            return DialogFlowBridge.getInstance().chat(message.getContent(), "en-US");
+            // UNLESS we determine it's time for an extreme response/exception.
+            if (ExceptionManager.getInstance().shouldRespondExtreme()) {
+                return ExceptionManager.getInstance().getExtremeResponse();
+            }
+            else {
+                return DialogFlowBridge.getInstance().chat(message.getContent(), "en-US");
+            }
         }
     }
 
