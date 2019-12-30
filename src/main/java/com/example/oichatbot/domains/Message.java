@@ -12,6 +12,8 @@ public class Message {
     private Boolean fromBot;
     private String suggestedColor;
     private String audioFile = "";
+    private Integer fontSize = 36;
+    private String font = "Helvetica";
 
     public Message() {
 
@@ -81,6 +83,22 @@ public class Message {
 
     public void setAudioFile(String audioFile) {
         this.audioFile = audioFile;
+    }
+
+    public Integer getFontSize() {
+        return fontSize;
+    }
+
+    public void setFontSize(Integer fontSize) {
+        this.fontSize = fontSize;
+    }
+
+    public String getFont() {
+        return font;
+    }
+
+    public void setFont(String font) {
+        this.font = font;
     }
 
     /**
