@@ -20,7 +20,7 @@ public class ExceptionManager {
     private Float maxPatience = -0.3f;          // Patience has to be lower than this for an extreme response to even be considered.
     private Float maxPatienceCapslock = -0.9f;  // Response will be shown in all-caps if Patience is lower than this value.
 
-    private Integer extremeFontSize = 96;
+    private Integer extremeFontSize = 3;
     private String extremeFont = "Comic Sans MS";
     private String extremeColor = "#ff0000";
     private List<String> responses;

@@ -12,7 +12,7 @@ public class Message {
     private Boolean fromBot;
     private String suggestedColor;
     private String audioFile = "";
-    private Integer fontSize = 36;
+    private Integer fontSize = 1;       // em.
     private String font = "Helvetica";
 
     public Message() {
