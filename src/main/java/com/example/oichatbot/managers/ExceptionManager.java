@@ -56,7 +56,7 @@ public class ExceptionManager {
     }
 
     /**
-     * Return a (random) extreme response/exception.
+     * Return a (random) extreme response/exception. Also slightly increases Patience afterwards.
      * Note that this method completely bypasses the usage of DialogFlowBridge.
      * Therefore it's important (like in DialogFlowBridge) we also e.g. check the input for emotion modifiers.
      * @return The complete message object (including font and audio properties).
@@ -106,6 +106,8 @@ public class ExceptionManager {
         responses.add("Not now!");
         responses.add("Go away!");
         responses.add("Shut up!");
+        responses.add("Stop it!");
+        responses.add("I'm done!");
     }
 
     /**
