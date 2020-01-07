@@ -202,6 +202,17 @@ public class PersonalityManager {
     }
 
     /**
+     * Increment emotion by specified amount. Can be negative.
+     * @param emotion Emotion to modify.
+     * @param amount Amount to add/substract.
+     */
+    public void incrementEmotion(String emotion, Float amount) {
+        Float prevValue = emotions.get(emotion);
+        Float newValue = clamp((prevValue + amount), -1.0f, 1.0f);
+        emotions.put(emotion, newValue);
+    }
+
+    /**
      * Clamp a float value between min and max. Interesting that Java does not have this by default.
      * @param value Value to clamp.
      * @param min Minimum.

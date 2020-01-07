@@ -83,6 +83,9 @@ public class ExceptionManager {
             output.setAudioFile(readAudioContent(output.getContent()));
 
         System.out.println("Returning extreme: " + output.getContent());
+
+        // Slightly increase Patience to reduce the amount of successive extremes.
+        PersonalityManager.getInstance().incrementEmotion("Patience", 0.1f);
         return output;
     }
 
