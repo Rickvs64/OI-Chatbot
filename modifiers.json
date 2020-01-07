@@ -16,6 +16,16 @@
   },
   {
     "relevantEmotion": "Patience",
+    "relevantWord": "like",
+    "modification": 0.1
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "love",
+    "modification": 0.1
+  },
+  {
+    "relevantEmotion": "Patience",
     "relevantWord": "good",
     "modification": 0.1
   },
