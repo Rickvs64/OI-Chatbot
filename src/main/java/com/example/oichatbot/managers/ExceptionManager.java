@@ -85,7 +85,7 @@ public class ExceptionManager {
         System.out.println("Returning extreme: " + output.getContent());
 
         // Slightly increase Patience to reduce the amount of successive extremes.
-        PersonalityManager.getInstance().incrementEmotion("Patience", 0.1f);
+        PersonalityManager.getInstance().incrementEmotion("Patience", 0.2f);
         return output;
     }
 
