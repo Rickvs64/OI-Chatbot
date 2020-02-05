@@ -126,7 +126,17 @@
   },
   {
     "relevantEmotion": "Patience",
+    "relevantWord": "f***",
+    "modification": -0.2
+  },
+  {
+    "relevantEmotion": "Patience",
     "relevantWord": "fucking",
+    "modification": -0.2
+  },
+  {
+    "relevantEmotion": "Patience",
+    "relevantWord": "f***ing",
     "modification": -0.2
   },
   {
